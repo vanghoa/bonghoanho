@@ -155,8 +155,10 @@ remote-control button.bot {
 }
 
 remote-control .b_small {
-    width: 40px;
-    height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 13vw;
+    height: 13vw;
     border-radius: 20px;
     position: relative;
     background-color: orange;
