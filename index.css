@@ -30,7 +30,7 @@ remote-control {
     display: none;
     justify-items: center;
     align-items: center;
-    gap: 10px 10px;
+    gap: 20px 10px;
     width: 100%;
     height: 100%;
     grid-template: repeat(9, 1fr) / repeat(3, 1fr);
@@ -52,6 +52,14 @@ remote-control button.left {
 
 remote-control button.right {
     justify-self: start;
+}
+
+remote-control button.top {
+    align-self: start;
+}
+
+remote-control button.bot {
+    align-self: end;
 }
 
 /*-----------*/
@@ -108,9 +116,9 @@ remote-control button.right {
 }
 
 #b_10::after {
-    left: 40px;
+    left: 0;
     content: 'fail';
-    top: 0;
+    top: -20px;
 }
 
 #b_12 {
@@ -119,9 +127,9 @@ remote-control button.right {
 }
 
 #b_12::after {
-    right: 40px;
+    right: 0;
     content: 'poor af';
-    top: 0;
+    top: -20px;
 }
 
 #b_16 {
@@ -130,9 +138,9 @@ remote-control button.right {
 }
 
 #b_16::after {
-    left: 40px;
+    left: 0;
     content: 'OT';
-    bottom: 0;
+    bottom: -20px;
 }
 
 #b_18 {
@@ -141,9 +149,9 @@ remote-control button.right {
 }
 
 #b_18::after {
-    right: 40px;
+    right: 0;
     content: 'peer pressure';
-    bottom: 0;
+    bottom: -20px;
 }
 
 remote-control .b_small {
@@ -157,6 +165,7 @@ remote-control .b_small {
 remote-control .b_small::after {
     position: absolute;
     word-break: keep-all;
+    white-space: nowrap;
     color: white;
     opacity: 100%;
 }
