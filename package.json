@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "devtools-detect": "^4.0.1"
+  }
+}
