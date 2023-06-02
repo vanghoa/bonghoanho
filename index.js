@@ -38,7 +38,7 @@ let gap_ = 3;
 let gapicon_ = '-';
 let highestheight = 50;
 let elevation = 1;
-let delay_ = 200;
+let delay_ = 100;
 
 //control
 const control = {
@@ -380,7 +380,7 @@ function delay(time) {
 
 // function for changing the graph
 let start_check = 0;
-let timeout;
+let timeout = null;
 
 const para_funcs = {
     eat() {
@@ -390,6 +390,7 @@ const para_funcs = {
     sleep() {
         height += 3;
         highestheight = height * 1.5;
+        gap_ -= 3;
     },
     ent() {
         gap_ += 2;
@@ -411,15 +412,16 @@ const para_funcs = {
         length -= 3;
         height -= 2;
         highestheight = height * 1.5;
+        gap_ -= 3;
     },
     poor() {
         length -= 2;
         elevation -= 3;
-        gap_ -= 2;
+        gap_ -= 7;
     },
     learnppl() {
         length += 8;
-        gap_ -= 2;
+        gap_ -= 5;
     },
     learnown() {
         length -= 8;
@@ -448,12 +450,14 @@ const para_funcs = {
     },
     finance() {
         gapicon_ = '$maker';
+        gap_ -= 3;
     },
     fren() {
         gapicon_ = '@-@';
     },
     fam() {
         gapicon_ = '<3';
+        gap_ -= 3;
     },
 };
 for (let i = 0; i < allparas.length; i++) {
@@ -477,17 +481,20 @@ start_.onclick = function () {
 };
 
 function para_onclick(e) {
-    clearTimeout(timeout);
+    if (timeout !== null) {
+        clearTimeout(timeout);
+    }
     timeout = setTimeout(function () {
-        check_(height);
-        check_(length);
-        check_(sharpness);
-        check_(elevation);
-        check_(gap_);
-        check_(highestheight);
+        height = check_(height);
+        length = check_(length);
+        sharpness = check_(sharpness);
+        elevation = check_(elevation);
+        gap_ = check_(gap_);
+        highestheight = check_(highestheight);
 
         template_generate();
-    }, 1000);
+        timeout = null;
+    }, 1500);
     para_funcs[e.target.getAttribute('para')]();
 }
 
