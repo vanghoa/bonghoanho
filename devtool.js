@@ -1,4 +1,4 @@
-import devtools from './node_modules/devtools-detect/index.js';
+import devtools from './devtoolsrc.js';
 
 // Check if it's open
 //console.log('Is DevTools open:', devtools.isOpen);
