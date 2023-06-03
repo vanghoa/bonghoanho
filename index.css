@@ -256,10 +256,10 @@ for-mobile {
 }
 
 @media (hover: none) and (pointer: coarse) {
-    * {
+    body * {
         display: none;
     }
-    for-mobile {
+    body for-mobile {
         display: block;
     }
 }
