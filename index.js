@@ -11,7 +11,22 @@ const body = document.body;
 
 // const
 const TWO_PI = 2 * Math.PI;
-const clock = ['/=====\\', '|.....|', '|.....|', '\\=====/'];
+const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
+clock.skt = 7;
+let slogan;
+// prettier-ignore
+{slogan = [
+    '000000000000000000000000000000000000000000000000000000000000000000000000',
+    '0000................................................................0000',
+    '00...../)..đo.../).,.điện...........tâm........./).đồ.......máy.......00',
+    '0...._(/.___.._(/....._.__....._/_._..___....._(/.___..___..._.........0',
+    '0...(_(_(_)..(_(__(__(/_/.(_...(__(_(_//.(_..(_(_(_)...//.(_(_(_(_/_...0',
+    '00..............................................................-/....00',
+    '0000..........................................................(_/...0000',
+    '000000000000000000000000000000000000000000000000000000000000000000000000',
+];
+slogan.reverse();
+}
 const div_welcome = $('welcome---to---ngu---trong---phong---thu');
 const style_ = $('style');
 const start_ = $('#b_14');
@@ -36,6 +51,7 @@ let height = 40;
 let sharpness = 10;
 let gap_ = 3;
 let gapicon_ = '-';
+let eleicon = '<3';
 let highestheight = 50;
 let elevation = 1;
 let delay_ = 100;
@@ -85,9 +101,8 @@ const frag = document.createDocumentFragment();
 
 for (let i = 0; i <= 59; i++) {
     let div = $create('div');
-    div.upper = div.upper_ = div.below = div.below_ = '';
-    div.id = '';
-    div.className = '';
+    div.below = div.below_ = div.id = eleicon;
+    div.upper = div.upper_ = div.className = '-';
     div.render = function ({ upper, below }) {
         this.setAttribute('id', below);
         this.setAttribute('class', upper);
@@ -96,30 +111,44 @@ for (let i = 0; i <= 59; i++) {
     divs.unshift(div);
 }
 
-for (let a = 0; a <= 10; a++) {
-    let cmt = $createcomment(
-        (() => {
-            let cmt = '';
-            for (let i = 0; i <= max_height; i++) {
-                if (i == 5) {
-                    cmt += '0';
-                } else if (i == 16) {
-                    cmt += 'B';
-                } else {
-                    cmt += '.';
-                }
-            }
-            return cmt;
-        })()
+(() => {
+    let { slope: m4, intercept: c4 } = e_line(
+        { x: max_height - 3, y: 10 },
+        { x: 24, y: 0 }
     );
-    frag.prepend(cmt);
-    cmts.unshift(cmt);
-}
+    for (let a = 0; a <= 10; a++) {
+        let x4 = Math.round((a - c4) / m4);
+        let cmt = $createcomment(
+            (() => {
+                let cmt = '';
+                for (let i = 0; i <= max_height; i++) {
+                    if (i == 5) {
+                        cmt += '0';
+                    } else if (i == 16) {
+                        cmt += 'B';
+                    } else if (i == x4) {
+                        cmt += 'K';
+                    } else {
+                        cmt += '.';
+                    }
+                }
+                return cmt;
+            })()
+        );
+        frag.prepend(cmt);
+        cmts.unshift(cmt);
+    }
+})();
 
 for (let a = 0; a < 4; a++) {
     let cmt = $createcomment('');
     frag.prepend(cmt);
     clocks.unshift(cmt);
+}
+
+for (let a = 0; a < slogan.length; a++) {
+    let cmt = $createcomment(slogan[a]);
+    frag.prepend(cmt);
 }
 
 body.prepend(div_welcome, frag);
@@ -166,7 +195,7 @@ function template_generate() {
     //let length = 10;
     let belowspc = '';
     for (let a = 1; a <= elevation; a++) {
-        belowspc += '()';
+        belowspc += eleicon;
     }
     let gaphalf = Math.ceil(gap_ / 2);
     let add_height = highestheight - height;
@@ -206,13 +235,13 @@ function template_generate() {
     // template generation
     for (let a = 0; a < value_arr.length; a++) {
         let line = '';
-        for (let b = 0; b <= value_arr[a]; b++) {
+        for (let b = 0; b < value_arr[a]; b++) {
             line += '-';
         }
         template.push({ upper: line, below: belowspc, u: value_arr[a] });
     }
     // extra height
-    for (let a = 1; a <= add_height; a++) {
+    for (let a = 0; a <= add_height; a++) {
         template[max.index].upper += '-';
     }
     template[max.index].u += add_height;
@@ -220,12 +249,12 @@ function template_generate() {
     let length_ = Math.ceil(length / 4);
     // transition to baseline generation
     for (
-        let a = (value_arr[0] * (length_ - 1)) / length_;
+        let a = Math.round((value_arr[0] * (length_ - 1)) / length_);
         a > 0;
         a -= value_arr[0] / length_
     ) {
         let line = '';
-        for (let b = 0; b <= a; b++) {
+        for (let b = 0; b < a; b++) {
             line += '-';
         }
         template.push({ upper: line, below: belowspc, u: a });
@@ -233,8 +262,16 @@ function template_generate() {
     }
     // gap generation
     for (let a = 1; a <= gaphalf; a++) {
-        template.push({ upper: gapicon_, below: belowspc, u: 0 });
-        template.unshift({ upper: gapicon_, below: belowspc, u: 0 });
+        template.push({
+            upper: gapicon_,
+            below: belowspc,
+            u: gapicon_.length,
+        });
+        template.unshift({
+            upper: gapicon_,
+            below: belowspc,
+            u: gapicon_.length,
+        });
     }
     // template_cmt
     template_cmt_generate();
@@ -247,10 +284,10 @@ function template_generate() {
         for (let a = 1; a <= ele_length; a++) {
             let line = '';
             for (let b = 1; b <= ele_small; b++) {
-                line += '()';
+                line += eleicon;
             }
             for (let b = 1; b <= diff_ele * (a / ele_length); b++) {
-                line += '()';
+                line += eleicon;
             }
             transition.push(line);
         }
@@ -272,11 +309,15 @@ function template_cmt_generate() {
         let temp = [];
         let { slope: m, intercept: c } = e_line(
             { x: 14 + 2 * elevation, y: 0 },
-            { x: template[i].u + 14 + 2 * elevation, y: 10 }
+            { x: template[i].u + 13 + 2 * elevation, y: 10 }
         );
         let { slope: m_, intercept: c_ } = e_line(
             { x: 5, y: 0 },
             { x: 4 + 2 * elevation, y: 10 }
+        );
+        let { slope: m4, intercept: c4 } = e_line(
+            { x: max_height - 3, y: 0 },
+            { x: template[i].u + 21 + 2 * elevation, y: 10 }
         );
 
         for (let y = 0; y <= cmts.length - 1; y++) {
@@ -287,6 +328,18 @@ function template_cmt_generate() {
             } else {
                 x = Math.round((y - c) / m);
             }
+            let x4;
+            if (m4 === Infinity) {
+                x4 = max_height - 3;
+            } else {
+                x4 = Math.round((y - c4) / m4);
+            }
+            let x1 =
+                14 +
+                2 * elevation +
+                Math.round(((x - (14 + 2 * elevation)) / 5) * 3);
+            let x2 =
+                14 + 2 * elevation + Math.round((x - (14 + 2 * elevation)) / 4);
             let x_;
             if (i % 2 == 0) {
                 x_ = 5;
@@ -294,10 +347,16 @@ function template_cmt_generate() {
                 x_ = Math.round((y - c_) / m_);
             }
             for (let i = 0; i <= max_height; i++) {
-                if (i == x) {
+                if (i == x2) {
                     tempcmt += 'B';
                 } else if (i == x_) {
                     tempcmt += '0';
+                } else if (i == x1) {
+                    tempcmt += 'I';
+                } else if (i == x) {
+                    tempcmt += 'P';
+                } else if (i == x4) {
+                    tempcmt += 'K';
                 } else {
                     tempcmt += '.';
                 }
@@ -315,17 +374,34 @@ function clock_generate() {
             cmt += '.';
         }
         cmt += clock[a];
-        for (let i = clock[a].length + 3; i < 12 + 2 * elevation; i++) {
-            cmt += a == 1 ? '>' : '.';
+        for (
+            let i = clock[a].length + 3;
+            i < 5 + 2 * elevation + clock.skt;
+            i++
+        ) {
+            if (a == 1) {
+                cmt += i % 2 == 0 ? '>' : 'o';
+            } else if (a == 2) {
+                cmt += i % 2 == 0 ? 'A' : '.';
+            } else {
+                cmt += '.';
+            }
         }
         cmt += clock[a];
         for (
-            let i = clock[a].length + 11 + 2 * elevation;
-            i <= max_height;
+            let i = clock[a].length + 4 + 2 * elevation + clock.skt;
+            i <= max_height - clock.skt;
             i++
         ) {
-            cmt += '.';
+            if (a == 1) {
+                cmt += i % 2 == 0 ? '>' : 'o';
+            } else if (a == 2) {
+                cmt += i % 2 == 0 ? 'A' : '.';
+            } else {
+                cmt += '.';
+            }
         }
+        cmt += clock[a];
         clocks[a].nodeValue = cmt;
     }
 }
@@ -389,7 +465,6 @@ const para_funcs = {
     },
     sleep() {
         height += 3;
-        highestheight = height * 1.5;
         gap_ -= 3;
     },
     ent() {
@@ -411,7 +486,6 @@ const para_funcs = {
     fail() {
         length -= 3;
         height -= 2;
-        highestheight = height * 1.5;
         gap_ -= 3;
     },
     poor() {
@@ -427,7 +501,6 @@ const para_funcs = {
         length -= 8;
         height += 7;
         gap_ += 2;
-        highestheight = height * 1.5;
     },
     unlearn() {
         length += 5;
@@ -435,13 +508,11 @@ const para_funcs = {
     },
     prac() {
         height += 4;
-        highestheight = height * 1.5;
         elevation += 2;
     },
     OT() {
         length -= 7;
         height -= 5;
-        highestheight = height * 1.5;
     },
     peer() {
         length -= 8;
@@ -450,13 +521,16 @@ const para_funcs = {
     },
     finance() {
         gapicon_ = '$maker';
+        eleicon = '$$';
         gap_ -= 3;
     },
     fren() {
-        gapicon_ = '@-@';
+        gapicon_ = '@<@';
+        eleicon = '#*';
     },
     fam() {
         gapicon_ = '<3';
+        eleicon = '()';
         gap_ -= 3;
     },
 };
@@ -472,11 +546,13 @@ start_.onclick = function () {
         for (let i = 0; i < allparas.length; i++) {
             allparas[i].disabled = false;
         }
+        start_.innerHTML = 'STOP';
     } else {
         stop = true;
         for (let i = 0; i < allparas.length; i++) {
             allparas[i].disabled = true;
         }
+        start_.innerHTML = 'START';
     }
 };
 
@@ -489,15 +565,16 @@ function para_onclick(e) {
         length = check_(length);
         sharpness = check_(sharpness);
         elevation = check_(elevation);
+        elevation = elevation > 38 ? 38 : elevation;
         gap_ = check_(gap_);
-        highestheight = check_(highestheight);
-
+        highestheight = height * 1.5;
+        //
         template_generate();
         timeout = null;
     }, 1500);
     para_funcs[e.target.getAttribute('para')]();
 }
 
-function check_(para) {
-    return para < 0 ? 0 : para;
+function check_(para, num = 1) {
+    return para < num ? num : para;
 }

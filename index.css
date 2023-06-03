@@ -4,6 +4,7 @@
     padding: 0;
     -webkit-text-size-adjust: none;
     text-size-adjust: none;
+    font-size: 1.5vh;
 }
 
 remote-control,
@@ -249,3 +250,16 @@ body {
     background-image: url('remote.jpg');
 }
 */
+
+for-mobile {
+    display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    * {
+        display: none;
+    }
+    for-mobile {
+        display: block;
+    }
+}
