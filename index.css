@@ -20,7 +20,7 @@ body {
     background-size: 100% 100%;
 }
 
-welcome---to---ngu---trong---phong---thu {
+welcome---to---đo---điện---tâm---đồ---máy {
     display: block;
     padding: 20px;
     max-width: 200px;
@@ -41,7 +41,7 @@ remote-control {
 remote-control button {
     max-width: 60px;
     width: 100%;
-    height: 60px;
+    height: 8vh;
     border-radius: 30px;
     word-wrap: break-word;
     word-break: break-all;
@@ -66,24 +66,9 @@ remote-control button.bot {
 /*-----------*/
 
 #b_3 {
-    position: relative;
     background-color: red;
-}
-
-#b_3:before,
-#b_3:after {
-    position: absolute;
-    top: 13px;
-    content: ' ';
-    height: 33px;
-    width: 2px;
-    background-color: #ffffff;
-}
-#b_3:before {
-    transform: rotate(45deg);
-}
-#b_3:after {
-    transform: rotate(-45deg);
+    color: white;
+    font-size: 3.5vh;
 }
 
 #b_19 {
@@ -103,7 +88,6 @@ remote-control button.bot {
 #b_14 {
     max-width: none;
     max-height: none;
-    height: 100%;
     width: 100%;
     border-radius: 20px;
     background-color: rgb(47, 255, 0);

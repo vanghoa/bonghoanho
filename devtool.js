@@ -31,7 +31,7 @@ function windowresize_func(event) {
     window.removeEventListener('resize', windowresize_func);
     setTimeout(() => {
         style_.textContent = `@media (max-aspect-ratio: 300/950) {
-            welcome---to---ngu---trong---phong---thu {
+            welcome---to---đo---điện---tâm---đồ---máy {
                 display: none !important;
             }
 

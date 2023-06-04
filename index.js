@@ -27,7 +27,7 @@ let slogan;
 ];
 slogan.reverse();
 }
-const div_welcome = $('welcome---to---ngu---trong---phong---thu');
+const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
 const style_ = $('style');
 const start_ = $('#b_14');
 const allparas = $$('.para');
@@ -98,6 +98,7 @@ const ele = control.ele.bind(control);
 
 // setup html
 const frag = document.createDocumentFragment();
+const frag2 = document.createDocumentFragment();
 
 for (let i = 0; i <= 59; i++) {
     let div = $create('div');
@@ -148,10 +149,10 @@ for (let a = 0; a < 4; a++) {
 
 for (let a = 0; a < slogan.length; a++) {
     let cmt = $createcomment(slogan[a]);
-    frag.prepend(cmt);
+    frag2.prepend(cmt);
 }
 
-body.prepend(div_welcome, frag);
+body.prepend(frag2, div_welcome, frag);
 Object.freeze(divs);
 
 // animation loop
