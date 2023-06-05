@@ -39,11 +39,14 @@ const clocks = [];
 let template = [];
 let transition = [];
 let template_cmt = [];
+let fullhtml = [];
+let slogan_ = [];
 let elevation_ = 1;
 let transready = false;
 let genready = true;
 let transcount = 0;
 const max_height = 100;
+let devtoolopenfirst = true;
 
 // template para
 let length = 3;
@@ -150,9 +153,12 @@ for (let a = 0; a < 4; a++) {
 for (let a = 0; a < slogan.length; a++) {
     let cmt = $createcomment(slogan[a]);
     frag2.prepend(cmt);
+    slogan_.unshift(cmt);
 }
 
-body.prepend(frag2, div_welcome, frag);
+fullhtml = slogan_.concat(clocks, cmts, divs).reverse();
+
+body.prepend(div_welcome);
 Object.freeze(divs);
 
 // animation loop
@@ -453,6 +459,10 @@ function map(number, inMin, inMax, outMin, outMax) {
 
 function delay(time) {
     delay_ = time;
+}
+
+function winclose() {
+    close();
 }
 
 // function for changing the graph
