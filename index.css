@@ -4,7 +4,6 @@
     padding: 0;
     -webkit-text-size-adjust: none;
     text-size-adjust: none;
-    font-size: 1.5vh;
 }
 
 remote-control,
@@ -46,6 +45,7 @@ remote-control button {
     border-radius: 30px;
     word-wrap: break-word;
     word-break: break-all;
+    font-size: 1.5vh;
 }
 
 remote-control button.left {
@@ -92,6 +92,11 @@ remote-control button.bot {
     width: 100%;
     border-radius: 20px;
     background-color: rgb(47, 255, 0);
+}
+
+#b_14.pressed {
+    background-color: rgb(255, 94, 0);
+    color: white;
 }
 
 /*-----------*/
@@ -159,7 +164,7 @@ remote-control .b_small::after {
 }
 
 remote-control .b_small[disabled]::after {
-    opacity: 50%;
+    opacity: 30%;
 }
 
 /*-----------*/

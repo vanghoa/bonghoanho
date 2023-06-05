@@ -4,9 +4,7 @@ import devtools from './devtoolsrc.js';
 
 // Check if it's open
 //console.log('Is DevTools open:', devtools.isOpen);
-if (devtools.isOpen) {
-    devtoolsisopen_func();
-}
+devtoolschange_func({ detail: devtools });
 
 // Check it's orientation, `undefined` if not open
 //console.log('DevTools orientation:', devtools.orientation);
@@ -14,7 +12,11 @@ if (devtools.isOpen) {
 // Get notified when it's opened/closed or orientation changes
 window.addEventListener('devtoolschange', devtoolschange_func);
 window.onresize = _.debounce(function () {
-    if (!devtools.isOpen || devtoolopenfirst) {
+    if (
+        !devtools.isOpen ||
+        devtoolopenfirst ||
+        devtools.orientation === 'horizontal'
+    ) {
         return;
     }
     if (matchMedia('(max-aspect-ratio: 300/950)').matches) {
@@ -40,14 +42,17 @@ window.onresize = _.debounce(function () {
     }
 }, 1000);
 
-function devtoolschange_func(event) {
+function devtoolschange_func({ detail: { isOpen, orientation } }) {
     //console.log('Is DevTools open:', event.detail.isOpen);
     //console.log('DevTools orientation:', event.detail.orientation);
-    if (event.detail.isOpen) {
-        if (confirm('Do you see the Devtool?') == true) {
-            devtoolsisopen_func();
+    if (isOpen) {
+        if (orientation === 'vertical') {
+            div_welcome.innerHTML =
+                'Widen the Devtool by dragging its edge until a TV remote control shows up';
+
+            window.addEventListener('resize', windowresize_func);
         } else {
-            alert('Do it again!');
+            div_welcome.innerHTML = 'The Devtool needs to be vertical!';
         }
     } else {
         div_welcome.innerHTML =
@@ -74,11 +79,4 @@ function windowresize_func(event) {
         }`;
         devtoolopenfirst = false;
     }, 1000);
-}
-
-function devtoolsisopen_func() {
-    div_welcome.innerHTML =
-        'Widen the Devtool by dragging its edge until a TV remote control shows up';
-
-    window.addEventListener('resize', windowresize_func);
 }
