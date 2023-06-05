@@ -14,6 +14,7 @@ const TWO_PI = 2 * Math.PI;
 const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
 clock.skt = 7;
 let slogan;
+let so;
 // prettier-ignore
 {slogan = [
     '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
@@ -26,6 +27,20 @@ let slogan;
     '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
 ];
 slogan.reverse();
+
+so = {
+    0: ['._.', '/.\\', '\\_/'],
+    1: ['..','/|','.|'],
+    2: ['__.','._)','/__'],
+    3: ['__.','__)','__)'],
+    4: ['...','|_|','..|'],
+    5: ['.__','|_.','__)'],
+    6: ['._.','|_.','\\_)'],
+    7: ['.__','../','./.'],
+    8: ['._.','(_)','(_)'],
+    9: ['._.','(_|','._/'],
+    ':': ['.o.','...','.o.']
+}
 }
 const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
 const style_ = $('style');
@@ -41,6 +56,8 @@ let transition = [];
 let template_cmt = [];
 let fullhtml = [];
 let slogan_ = [];
+let currentdate;
+let numberdisplay = [];
 let elevation_ = 1;
 let transready = false;
 let genready = true;
@@ -49,7 +66,7 @@ const max_height = 100;
 let devtoolopenfirst = true;
 
 // template para
-let length = 3;
+let length = 5;
 let height = 40;
 let sharpness = 10;
 let gap_ = 3;
@@ -156,19 +173,39 @@ for (let a = 0; a < slogan.length; a++) {
     slogan_.unshift(cmt);
 }
 
-fullhtml = slogan_.concat(clocks, cmts, divs).reverse();
+for (let a = 0; a < so[0].length + 2; a++) {
+    let cmt = $createcomment(
+        (() => {
+            let cmt = '';
+            for (let i = 0; i <= max_height; i++) {
+                cmt += '.';
+            }
+            return cmt;
+        })()
+    );
+    numberdisplay.unshift(cmt);
+}
+
+fullhtml = slogan_.concat(numberdisplay, clocks, cmts, divs).reverse();
 
 body.prepend(div_welcome);
 Object.freeze(divs);
 
 // animation loop
 let myrequest;
-let stop = false;
+let stop = true;
 let count = 0;
+let last = 0;
+let datecheck = true;
 
-async function animation() {
+async function animation(now) {
+    if (!last || now - last >= 1000) {
+        last = now;
+        datecheck = true;
+    }
     if (!genready) {
         render_first(template[count]);
+        render_numberdisplay(template[count]);
         render_comment();
         render_toptobot();
         if (++count == template.length) {
@@ -242,13 +279,13 @@ function template_generate() {
     // template generation
     for (let a = 0; a < value_arr.length; a++) {
         let line = '';
-        for (let b = 0; b < value_arr[a]; b++) {
+        for (let b = 0; b <= value_arr[a]; b++) {
             line += '-';
         }
         template.push({ upper: line, below: belowspc, u: value_arr[a] });
     }
     // extra height
-    for (let a = 0; a <= add_height; a++) {
+    for (let a = 0; a < add_height; a++) {
         template[max.index].upper += '-';
     }
     template[max.index].u += add_height;
@@ -437,6 +474,44 @@ function render_comment() {
     }
 }
 
+function render_numberdisplay({ upper, below }) {
+    let tong = Math.round(
+        map(upper.length + below.length, 3, 30, 0, 1000)
+    ).toString();
+    let tonglength = tong.length;
+
+    if (datecheck) {
+        currentdate = new Date().toLocaleTimeString().split(' ')[0];
+        let currentdatelength = currentdate.length;
+        for (let a = 1; a <= 8 - currentdatelength; a++) {
+            currentdate = '0' + currentdate;
+        }
+    }
+
+    for (let a = 1; a <= 5 - tonglength; a++) {
+        tong = '0' + tong;
+    }
+
+    for (let a = 1; a < numberdisplay.length - 1; a++) {
+        let cmt = '';
+        let cmt2 = '';
+
+        for (let b = 0; b < tong.length; b++) {
+            cmt += `..${so[tong[b]][a - 1]}`;
+        }
+        let cmtlength = cmt.length;
+        for (let b = 0; b < currentdate.length; b++) {
+            cmt2 += `..${so[currentdate[b]][a - 1]}`;
+        }
+        for (let b = 0; b <= max_height - cmtlength - cmt2.length; b++) {
+            cmt += '.';
+        }
+
+        numberdisplay[a].nodeValue = cmt + cmt2;
+    }
+    datecheck = false;
+}
+
 function e_line(point1, point2) {
     const slope = (point2.y - point1.y) / (point2.x - point1.x);
     const intercept = point1.y - slope * point1.x;
@@ -487,6 +562,7 @@ const para_funcs = {
         length += 2;
     },
     sex() {
+        height += 8;
         length += 5;
         gap_ += 3;
     },
@@ -553,15 +629,16 @@ for (let i = 0; i < allparas.length; i++) {
 
 start_.onclick = function () {
     start_.classList.toggle('pressed');
+    stop = !stop;
     if (start_check++ % 2 == 0) {
-        stop = false;
+        //stop = false;
         myrequest = requestAnimationFrame(animation);
         for (let i = 0; i < allparas.length; i++) {
             allparas[i].disabled = false;
         }
         start_.innerHTML = 'STOP';
     } else {
-        stop = true;
+        //stop = true;
         for (let i = 0; i < allparas.length; i++) {
             allparas[i].disabled = true;
         }
@@ -569,18 +646,24 @@ start_.onclick = function () {
     }
 };
 
+setInterval(function () {
+    if (!stop) {
+        height -= 6;
+        length -= 3;
+        //sharpness -= 5;
+        elevation -= 2;
+        gap_ -= 5;
+        checkthu();
+        template_generate();
+    }
+}, 5000);
+
 function para_onclick(e) {
     if (timeout !== null) {
         clearTimeout(timeout);
     }
     timeout = setTimeout(function () {
-        height = check_(height);
-        length = check_(length);
-        sharpness = check_(sharpness);
-        elevation = check_(elevation);
-        elevation = elevation > 38 ? 38 : elevation;
-        gap_ = check_(gap_);
-        highestheight = height * 1.5;
+        checkthu();
         //
         template_generate();
         timeout = null;
@@ -588,6 +671,16 @@ function para_onclick(e) {
     para_funcs[e.target.getAttribute('para')]();
 }
 
-function check_(para, num = 1) {
-    return para < num ? num : para;
+function checkthu() {
+    height = check_(height, 0);
+    length = check_(length, 0);
+    sharpness = check_(sharpness);
+    elevation = check_(elevation);
+    elevation = elevation > 38 ? 38 : elevation;
+    gap_ = check_(gap_);
+    highestheight = height * 1.5;
+    //
+    function check_(para, num = 1) {
+        return para < num ? num : para;
+    }
 }
