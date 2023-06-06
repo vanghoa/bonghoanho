@@ -13,39 +13,50 @@ const body = document.body;
 const TWO_PI = 2 * Math.PI;
 const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
 clock.skt = 7;
-let slogan;
-let so;
+let slogan, so, numdisplay_init;
 // prettier-ignore
-{slogan = [
-    '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
-    '0000.............................................................................................0000',
-    '00..................../)..đo.../).,.điện...........tâm........./).đồ.......máy.....................00',
-    '0..................._(/.___.._(/....._.__....._/_._..___....._(/.___..___..._.......................0',
-    '0..................(_(_(_)..(_(__(__(/_/.(_...(__(_(_//.(_..(_(_(_)...//.(_(_(_(_/_.................0',
-    '00.............................................................................-/..................00',
-    '0000.........................................................................(_/.................0000',
-    '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
-];
-slogan.reverse();
+{
+    slogan = [
+        '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+        '0000.............................................................................................0000',
+        '00..................../)..đo.../).,.điện...........tâm........./).đồ.......máy.....................00',
+        '0..................._(/.___.._(/....._.__....._/_._..___....._(/.___..___..._.......................0',
+        '0..................(_(_(_)..(_(__(__(/_/.(_...(__(_(_//.(_..(_(_(_)...//.(_(_(_(_/_.................0',
+        '00.............................................................................-/..................00',
+        '0000.........................................................................(_/.................0000',
+        '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+    ];
+    slogan.reverse();
 
-so = {
-    0: ['._.', '/.\\', '\\_/'],
-    1: ['..','/|','.|'],
-    2: ['__.','._)','/__'],
-    3: ['__.','__)','__)'],
-    4: ['...','|_|','..|'],
-    5: ['.__','|_.','__)'],
-    6: ['._.','|_.','\\_)'],
-    7: ['.__','../','./.'],
-    8: ['._.','(_)','(_)'],
-    9: ['._.','(_|','._/'],
-    ':': ['.o.','...','.o.']
-}
+    so = {
+        0: ['._.', '/.\\', '\\_/'],
+        1: ['..','/|','.|'],
+        2: ['__.','._)','/__'],
+        3: ['__.','__)','__)'],
+        4: ['...','|_|','..|'],
+        5: ['.__','|_.','__)'],
+        6: ['._.','|_.','\\_)'],
+        7: ['.__','../','./.'],
+        8: ['._.','(_)','(_)'],
+        9: ['._.','(_|','._/'],
+        ':': ['.o.','...','.o.']
+    }
+
+    numdisplay_init = [
+        '..passion.rate.:.......................................................................current.time.:',
+        '.....................................................................................................',
+        '..passion.rate.:.',
+        '.current.time.:'
+    ]
 }
 const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
 const style_ = $('style');
 const start_ = $('#b_14');
 const allparas = $$('.para');
+const sttlog1 = $create('input-log');
+const sttlog2 = $create('input-log');
+const log1 = sttlog1.setAttribute.bind(sttlog1);
+const log2 = sttlog2.setAttribute.bind(sttlog2);
 
 // locals
 const divs = [];
@@ -56,7 +67,7 @@ let transition = [];
 let template_cmt = [];
 let fullhtml = [];
 let slogan_ = [];
-let currentdate;
+let currentdate = '00:00:00';
 let numberdisplay = [];
 let elevation_ = 1;
 let transready = false;
@@ -64,6 +75,7 @@ let genready = true;
 let transcount = 0;
 const max_height = 100;
 let devtoolopenfirst = true;
+let count2 = 0;
 
 // template para
 let length = 5;
@@ -75,6 +87,13 @@ let eleicon = '<3';
 let highestheight = 50;
 let elevation = 1;
 let delay_ = 100;
+
+// animation loop
+let myrequest;
+let stop = true;
+let count = 0;
+let last = 0;
+let datecheck = true;
 
 //control
 const control = {
@@ -173,30 +192,35 @@ for (let a = 0; a < slogan.length; a++) {
     slogan_.unshift(cmt);
 }
 
-for (let a = 0; a < so[0].length + 2; a++) {
-    let cmt = $createcomment(
-        (() => {
-            let cmt = '';
-            for (let i = 0; i <= max_height; i++) {
-                cmt += '.';
-            }
-            return cmt;
-        })()
-    );
+for (let a = 0; a < so[0].length; a++) {
+    let cmt = $createcomment('');
     numberdisplay.unshift(cmt);
 }
 
-fullhtml = slogan_.concat(numberdisplay, clocks, cmts, divs).reverse();
+{
+    let cmt1 = $createcomment(numdisplay_init[0]);
+    numberdisplay.unshift(cmt1);
+    let cmt2 = $createcomment(numdisplay_init[1]);
+    numberdisplay.push(cmt2);
+}
+
+render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } });
+
+fullhtml = slogan_
+    .concat(
+        sttlog1,
+        $createcomment(numdisplay_init[1]),
+        numberdisplay,
+        $createcomment(numdisplay_init[1]),
+        sttlog2,
+        clocks,
+        cmts,
+        divs
+    )
+    .reverse();
 
 body.prepend(div_welcome);
 Object.freeze(divs);
-
-// animation loop
-let myrequest;
-let stop = true;
-let count = 0;
-let last = 0;
-let datecheck = true;
 
 async function animation(now) {
     if (!last || now - last >= 1000) {
@@ -212,7 +236,7 @@ async function animation(now) {
             count = 0;
         }
     }
-    await wait();
+    await wait(delay_);
     if (!stop) {
         myrequest = requestAnimationFrame(animation);
     }
@@ -475,9 +499,8 @@ function render_comment() {
 }
 
 function render_numberdisplay({ upper, below }) {
-    let tong = Math.round(
-        map(upper.length + below.length, 3, 30, 0, 1000)
-    ).toString();
+    let tong_ = Math.round(map(upper.length + below.length, 3, 30, 0, 1000));
+    let tong = tong_ < 0 ? '0' : tong_.toString();
     let tonglength = tong.length;
 
     if (datecheck) {
@@ -486,11 +509,72 @@ function render_numberdisplay({ upper, below }) {
         for (let a = 1; a <= 8 - currentdatelength; a++) {
             currentdate = '0' + currentdate;
         }
+        datecheck = false;
     }
 
     for (let a = 1; a <= 5 - tonglength; a++) {
         tong = '0' + tong;
     }
+
+    numberdisplay[0].nodeValue =
+        numdisplay_init[2] +
+        (() => {
+            let state;
+            if (tong_ < 20) {
+                state = '*ur passion dies*';
+            } else if (tong_ < 80) {
+                state = 'alert!!! critical!!!';
+            } else if (tong_ < 300) {
+                state = 'concerned!';
+            } else if (tong_ < 800) {
+                state = 'not great not terrible';
+            } else if (tong_ < 1300) {
+                state = 'stable (means good)';
+            } else if (tong_ < 1700) {
+                state = `flourished and healthy!`;
+            } else if (tong < 2000) {
+                state = `a bit devoted but I'll allow`;
+            } else if (tong < 2500) {
+                state = `this is out of hand`;
+            } else if (tong < 3000) {
+                state = `too radical already!`;
+            } else {
+                state = '*extreme comfort zone*';
+            }
+            let amax =
+                max_height -
+                numdisplay_init[2].length -
+                numdisplay_init[3].length -
+                state.length;
+            for (let a = 0; a <= amax; a++) {
+                state += '.';
+            }
+            state += numdisplay_init[3];
+            return state;
+        })();
+
+    numberdisplay[numberdisplay.length - 1].nodeValue = (() => {
+        let cmt = '';
+        let state;
+
+        if (tong_ < 800) {
+            state = '[make me consume more!]';
+        } else if (tong_ < 2000) {
+            state = '[aight! keep me just right there!]';
+        } else {
+            state = `[this is enough please...]`;
+        }
+        let statelength = state.length;
+        state = numdisplay_init[1] + state + numdisplay_init[1];
+
+        for (let a = 0; a <= max_height; a++) {
+            cmt += state[max_height + statelength - count2 + 1 + a];
+        }
+
+        count2 += count2 >= max_height + statelength + 1 ? -count2 : 1;
+
+        return cmt;
+    })();
 
     for (let a = 1; a < numberdisplay.length - 1; a++) {
         let cmt = '';
@@ -509,7 +593,6 @@ function render_numberdisplay({ upper, below }) {
 
         numberdisplay[a].nodeValue = cmt + cmt2;
     }
-    datecheck = false;
 }
 
 function e_line(point1, point2) {
@@ -524,8 +607,8 @@ function e_line(point1, point2) {
     return equation;
 }
 
-function wait() {
-    return new Promise((resolve) => setTimeout(resolve, delay_));
+function wait(delay) {
+    return new Promise((resolve) => setTimeout(resolve, delay));
 }
 
 function map(number, inMin, inMax, outMin, outMax) {
@@ -545,81 +628,118 @@ let start_check = 0;
 let timeout = null;
 
 const para_funcs = {
+    eat_: 0,
+    sleep_: 0,
+    ent_: 0,
+    shit_: 0,
+    sex_: 0,
+    exerc_: 0,
+    fail_: 0,
+    poor_: 0,
+    learnppl_: 0,
+    learnown_: 0,
+    unlearn_: 0,
+    prac_: 0,
+    OT_: 0,
+    peer_: 0,
+    finance_: 0,
+    fren_: 0,
+    fam_: 0,
     eat() {
         length += 2;
         sharpness += 5;
+        log1('Eat', `x${++this.eat_}`);
     },
     sleep() {
         height += 3;
         gap_ -= 3;
+        sharpness -= 2;
+        log1('Sleep', `x${++this.sleep_}`);
     },
     ent() {
         gap_ += 2;
         elevation += 2;
+        sharpness -= 5;
+        log1('Entertainment', `x${++this.ent_}`);
     },
     shit() {
         gap_ += 3;
         length += 2;
+        sharpness -= 5;
+        log1('Go_shit', `x${++this.shit_}`);
     },
     sex() {
         height += 8;
         length += 5;
         gap_ += 3;
+        log1('Have_sex', `x${++this.sex_}`);
     },
     exerc() {
         elevation += 1;
         sharpness += 3;
+        log1('Physical_exercise', `x${++this.exerc_}`);
     },
     fail() {
         length -= 3;
         height -= 2;
         gap_ -= 3;
+        log2('Fail', `x${++this.fail_}`);
     },
     poor() {
         length -= 2;
         elevation -= 3;
         gap_ -= 7;
+        log2('Poverty', `x${++this.poor_}`);
     },
     learnppl() {
         length += 8;
         gap_ -= 5;
+        log1('Learn_from_other_people', `x${++this.learnppl_}`);
     },
     learnown() {
         length -= 8;
         height += 7;
         gap_ += 2;
+        log1('Learn_on_your_own', `x${++this.learnown_}`);
     },
     unlearn() {
         length += 5;
         elevation += 3;
+        log1('Unlearn', `x${++this.unlearn_}`);
     },
     prac() {
         height += 4;
         elevation += 2;
+        log1('Repeated_practice', `x${++this.prac_}`);
     },
     OT() {
         length -= 7;
         height -= 5;
         gap_ -= 6;
+        log2('OT', `x${++this.OT_}`);
     },
     peer() {
         length -= 8;
         gap_ -= 5;
         elevation -= 3;
+        log2('Peer_pressure', `x${++this.peer_}`);
     },
     finance() {
         gapicon_ = '$maker';
         eleicon = '$$';
         gap_ -= 3;
+        log1('Finance', `x${++this.finance_}`);
     },
     fren() {
         gapicon_ = '@<@';
         eleicon = '#*';
+        log1('Friends', `x${++this.fren_}`);
     },
     fam() {
         gapicon_ = '<3';
         eleicon = '()';
         gap_ -= 3;
+        log1('Family', `x${++this.fam_}`);
     },
 };
 for (let i = 0; i < allparas.length; i++) {

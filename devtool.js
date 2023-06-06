@@ -11,7 +11,8 @@ devtoolschange_func({ detail: devtools });
 
 // Get notified when it's opened/closed or orientation changes
 window.addEventListener('devtoolschange', devtoolschange_func);
-window.onresize = _.debounce(function () {
+window.onresize = _.debounce(async function () {
+    start_.disabled = true;
     if (
         !devtools.isOpen ||
         devtoolopenfirst ||
@@ -25,8 +26,10 @@ window.onresize = _.debounce(function () {
         }
         div_welcome.innerHTML = '';
         for (let i = 0; i < fullhtml.length; i++) {
+            await wait(100);
             body.prepend(fullhtml[i]);
         }
+        start_.disabled = false;
     } else {
         if (
             div_welcome.innerHTML ==

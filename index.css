@@ -48,6 +48,14 @@ remote-control button {
     font-size: 1.5vh;
 }
 
+remote-control button:active:not([disabled]) {
+    opacity: 50%;
+}
+
+remote-control button:disabled {
+    opacity: 50%;
+}
+
 remote-control button.left {
     justify-self: end;
 }
@@ -62,6 +70,10 @@ remote-control button.top {
 
 remote-control button.bot {
     align-self: end;
+}
+
+input-log {
+    display: none;
 }
 
 /*-----------*/
