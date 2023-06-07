@@ -92,6 +92,7 @@ function stop_() {
     }
     start_.innerHTML = 'START';
     start_.classList.remove('pressed');
+    console.clear();
 }
 
 async function removeprepend(x) {
