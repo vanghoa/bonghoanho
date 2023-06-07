@@ -96,6 +96,9 @@ let count2 = 0;
 let countheart = 0;
 let init_anim = false;
 let hasbeenopen = false;
+let cs_check = true;
+let cs_color1 = 'yellow';
+let cs_color2 = 'red';
 
 // template para
 let length = 5;
@@ -113,47 +116,9 @@ let myrequest;
 let stop = true;
 let count = 0;
 let last = 0;
+let last_ = 0;
 let datecheck = true;
-
-//control
-const control = {
-    long(a) {
-        length = a;
-        return this;
-    },
-    high(a) {
-        height = a;
-        return this;
-    },
-    sharp(a) {
-        sharpness = a;
-        return this;
-    },
-    gap(a) {
-        gap_ = a;
-        return this;
-    },
-    gapicon(a) {
-        gapicon_ = a;
-        return this;
-    },
-    highest(a) {
-        highestheight = a;
-        return this;
-    },
-    ele(a) {
-        elevation = a;
-        return this;
-    },
-    init: template_generate,
-};
-const long = control.long.bind(control);
-const high = control.high.bind(control);
-const sharp = control.sharp.bind(control);
-const gap = control.gap.bind(control);
-const gapicon = control.gapicon.bind(control);
-const highest = control.highest.bind(control);
-const ele = control.ele.bind(control);
+let cscheck = true;
 
 // setup html
 const frag = document.createDocumentFragment();
@@ -246,11 +211,20 @@ async function animation(now) {
     if (!last || now - last >= 1000) {
         last = now;
         datecheck = true;
+        cs_check = !cs_check;
+    }
+    if (!last_ || now - last_ >= 300) {
+        last_ = now;
+        cscheck = true;
     }
     if (!genready) {
         render_first(template[count]);
         render_numberdisplay(template[count]);
         render_comment();
+        if (cscheck) {
+            render_console();
+            cscheck = false;
+        }
         render_toptobot();
         if (++count == template.length) {
             count = 0;
@@ -269,22 +243,25 @@ clock_generate();
 
 // function
 function render_toptobot() {
-    let cslog = [];
-    let log_ = [];
     for (let i = 1; i <= 59; i++) {
         divs[i].render(divs[i - 1]);
         divs[i].upper_ = divs[i - 1].upper;
         divs[i].below_ = divs[i - 1].below;
-        cslog.push(Math.round(map(divs[i - 1].upper.length, 0, 60, 1, 15)));
     }
     for (let i = 1; i <= 59; i++) {
         divs[i].upper = divs[i].upper_;
         divs[i].below = divs[i].below_;
     }
+}
 
+function render_console() {
+    let cslog = [];
+    let log = '%c';
+    for (let i = 1; i <= 59; i++) {
+        cslog.push(Math.round(map(divs[i - 1].upper.length, 0, 60, 1, 15)));
+    }
     console.clear();
     for (let a = 15; a > 0; a--) {
-        let log = '';
         for (let i = 1; i <= 59; i++) {
             if (cslog[i - 1] == a) {
                 log += '--';
@@ -292,9 +269,9 @@ function render_toptobot() {
                 log += '  ';
             }
         }
-        log_.push(log, '\n');
+        log += '\n';
     }
-    console.log(...log_);
+    console.log(log, `color: ${cs_check ? cs_color1 : cs_color2}`);
 }
 
 function template_generate() {
@@ -611,10 +588,16 @@ function render_numberdisplay({ upper, below }) {
 
         if (tong_ < 800) {
             state = '[make me consume more!]';
+            cs_color1 = 'red';
+            cs_color2 = 'yellow';
         } else if (tong_ < 2000) {
             state = '[aight! keep me just right there!]';
+            cs_color1 = 'yellow';
+            cs_color2 = 'green';
         } else {
             state = `[this is enough please...]`;
+            cs_color1 = 'green';
+            cs_color2 = 'blue';
         }
         let statelength = state.length;
         state = numdisplay_init[1] + state + numdisplay_init[1];
