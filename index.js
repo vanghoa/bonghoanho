@@ -13,7 +13,11 @@ const body = document.body;
 const TWO_PI = 2 * Math.PI;
 const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
 clock.skt = 7;
-let slogan, so, numdisplay_init;
+const needvertical = 'The Devtool needs to be vertical!';
+const widenit =
+    'Widen the Devtool by dragging its edge until a TV remote control shows up';
+const rightclick = 'Right click on THIS BLUE BOX & Select "Inspect"';
+let slogan, so, numdisplay_init, heart;
 // prettier-ignore
 {
     slogan = [
@@ -48,9 +52,22 @@ let slogan, so, numdisplay_init;
         '..passion.rate.:.',
         '.current.time.:'
     ]
+
+    heart = [
+`.my..heart: .............................. ......=+***=-....-=***+=:..... ...-#@@@@@@@@@++@@@@@@@@@#-... ..=@@@@%#@@@@@@@@@@@@@@@@@@=.. ..%@@%:...:@@@@@@@@@@@@@@@@@.. ..@@@+.....#@@@@@@@@@@@@@@@@.. ..+@@@*=-=#@@@@@@@@@@@@@@@@*.. ...*@@@@@@@@@@@@@@@@@@@@@@#... ....=@@@@@@@@@@@@@@@@@@@@=.... ......+%@@@@@@@@@@@@@@@+...... ........-#@@@@@@@@@@#-........ ...........-*@@@@*=........... ..............::.............. `,
+`.my..heart: .............................. ......-+***+=....-+***+-...... ....+@@@@@@@@@**@@@@@@@@@*:... ...%@@@%%@@@@@@@@@@@@@@@@@@:.. ..+@@+....#@@@@@@@@@@@@@@@@#.. ..+@@:....=@@@@@@@@@@@@@@@@#.. ..:@@%+-=*@@@@@@@@@@@@@@@@@-.. ...-@@@@@@@@@@@@@@@@@@@@@@+... ....:%@@@@@@@@@@@@@@@@@@%-.... ......=%@@@@@@@@@@@@@@%=...... ........:*@@@@@@@@@@#-........ ...........-*@@@@#=........... ..............::.............. `,
+`.my..heart: .............................. .......-+***+-..:=***+=....... .....=@@@@@@@@@%@@@@@@@@*..... ....+@@%%@@@@@@@@@@@@@@@@%.... ...:@%...:@@@@@@@@@@@@@@@@+... ...:@*....#@@@@@@@@@@@@@@@+... ....#@*==#@@@@@@@@@@@@@@@@:... .....%@@@@@@@@@@@@@@@@@@@=.... .....:%@@@@@@@@@@@@@@@@@-..... .......=@@@@@@@@@@@@@@*....... .........=%@@@@@@@@@+:........ ...........:*@@@@#=........... ..............:-.............. `,
+`.my..heart: .............................. ........-+***=::+***+:........ ......:%@@@@@@@@@@@@@@#:...... .....:@@@@@@@@@@@@@@@@@@...... .....+%-.=@@@@@@@@@@@@@@=..... .....+*..:@@@@@@@@@@@@@@=..... .....-@#=%@@@@@@@@@@@@@@:..... ......*@@@@@@@@@@@@@@@@+...... .......#@@@@@@@@@@@@@@*....... ........+@@@@@@@@@@@@=........ .........:#@@@@@@@@*:......... ...........:*@@@@*:........... ..............--.............. `,
+`.my..heart: .............................. ...........=***+***-.......... .........-@@@@@@@@@@%......... .........%@@@@@@@@@@@+........ ........:@@@@@@@@@@@@#........ ........:@@@@@@@@@@@@#........ .........@@@@@@@@@@@@*........ .........*@@@@@@@@@@@-........ .........:@@@@@@@@@@%......... ..........+@@@@@@@@@:......... ...........*@@@@@@@-.......... ............=@@@@%-........... ..............:-:............. `,
+`.my..heart: .............................. ............:+**+-............ ...........-@@@@@@-........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ...........=@@@@@@=........... ............#@@@@#............ ..............--:............. `,
+`.my..heart: .............................. ..........:+###*##*=.......... .........=@@@@@@@@@@%......... .........@@@@@@@@@@@@+........ ........:@@@@@@@@@@@@#........ ........:@@@@@@@@@@@@#........ .........@@@@@@@@@@@@+........ .........*@@@@@@@@@@@:........ .........:@@@@@@@@@@#......... ..........+@@@@@@@@%.......... ...........+@@@@@@@:.......... ............=@@@@#:........... ..............::.............. `,
+`.my..heart: .............................. ........-+***=:-+***+:........ ......-%@@@@@@@@@@@@@@#:...... .....:@@@@@@@%@@@@@@@@@@...... .....+@@@@@%:.-@@@@@@@@@=..... .....*@@@@@*..:%@@@@@@@@=..... .....-@@@@@@#=#@@@@@@@@@...... ......#@@@@@@@@@@@@@@@@+...... .......#@@@@@@@@@@@@@@+....... ........+@@@@@@@@@@@@-........ .........:#@@@@@@@@*.......... ...........:*@@@@+:........... ..............-:.............. `,
+`.my..heart: .............................. .......=*###*=..-+###*=:...... .....*@@@@@@@@@@@@@@@@@@#..... ....#@@@@@%##@@@@@@@@@@@@%.... ...-@@@@@*...-@@@@@@@@@@@@=... ...:@@@@@=....@@@@@@@@@@@@=... ....#@@@@@*=+%@@@@@@@@@@@@.... .....%@@@@@@@@@@@@@@@@@@@:.... .....:#@@@@@@@@@@@@@@@@%:..... .......-%@@@@@@@@@@@@@=....... .........=#@@@@@@@@%=......... ...........:+%@@@*-........... ...............:.............. `,
+`.my..heart: .............................. ......:=++++-....-=++++-...... ....+%@@@@@@@@*+@@@@@@@@@*:... ...%@@@@@%%@@@@@@@@@@@@@@@@:.. ..=@@@@*....#@@@@@@@@@@@@@@#.. ..+@@@@:....-@@@@@@@@@@@@@@%.. ..:@@@@@+--+@@@@@@@@@@@@@@@=.. ...-@@@@@@@@@@@@@@@@@@@@@@*... ....:%@@@@@@@@@@@@@@@@@@@=.... ......=%@@@@@@@@@@@@@@@+...... ........-*@@@@@@@@@@#=........ ...........=*@@@@#+:.......... ..............:-.............. `
+    ]
 }
 const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
-const style_ = $('style');
+const style_ = $$('style');
 const start_ = $('#b_14');
 const allparas = $$('.para');
 const sttlog1 = $create('input-log');
@@ -76,6 +93,9 @@ let transcount = 0;
 const max_height = 100;
 let devtoolopenfirst = true;
 let count2 = 0;
+let countheart = 0;
+let init_anim = false;
+let hasbeenopen = false;
 
 // template para
 let length = 5;
@@ -235,6 +255,9 @@ async function animation(now) {
         if (++count == template.length) {
             count = 0;
         }
+        if (++countheart == heart.length) {
+            countheart = 0;
+        }
     }
     await wait(delay_);
     if (!stop) {
@@ -246,15 +269,32 @@ clock_generate();
 
 // function
 function render_toptobot() {
+    let cslog = [];
+    let log_ = [];
     for (let i = 1; i <= 59; i++) {
         divs[i].render(divs[i - 1]);
         divs[i].upper_ = divs[i - 1].upper;
         divs[i].below_ = divs[i - 1].below;
+        cslog.push(Math.round(map(divs[i - 1].upper.length, 0, 60, 1, 15)));
     }
     for (let i = 1; i <= 59; i++) {
         divs[i].upper = divs[i].upper_;
         divs[i].below = divs[i].below_;
     }
+
+    console.clear();
+    for (let a = 15; a > 0; a--) {
+        let log = '';
+        for (let i = 1; i <= 59; i++) {
+            if (cslog[i - 1] == a) {
+                log += '--';
+            } else {
+                log += '  ';
+            }
+        }
+        log_.push(log, '\n');
+    }
+    console.log(...log_);
 }
 
 function template_generate() {
@@ -481,10 +521,12 @@ function dung() {
 function render_first({ upper, below }) {
     divs[0].upper = upper;
     if (transready) {
-        divs[0].below = transition[transcount++];
         if (transcount > transition.length - 1) {
             transready = false;
             transcount = 0;
+            divs[0].below = below;
+        } else {
+            divs[0].below = transition[transcount++];
         }
     } else {
         divs[0].below = below;
@@ -502,6 +544,7 @@ function render_numberdisplay({ upper, below }) {
     let tong_ = Math.round(map(upper.length + below.length, 3, 30, 0, 1000));
     let tong = tong_ < 0 ? '0' : tong_.toString();
     let tonglength = tong.length;
+    let h_wght = '.';
 
     if (datecheck) {
         currentdate = new Date().toLocaleTimeString().split(' ')[0];
@@ -521,25 +564,34 @@ function render_numberdisplay({ upper, below }) {
         (() => {
             let state;
             if (tong_ < 20) {
-                state = '*ur passion dies*';
+                state = '*my passion dies*';
             } else if (tong_ < 80) {
                 state = 'alert!!! critical!!!';
+                h_wght = '"';
             } else if (tong_ < 300) {
                 state = 'concerned!';
+                h_wght = '-';
             } else if (tong_ < 800) {
                 state = 'not great not terrible';
+                h_wght = '~';
             } else if (tong_ < 1300) {
                 state = 'stable (means good)';
+                h_wght = '!';
             } else if (tong_ < 1700) {
                 state = `flourished and healthy!`;
+                h_wght = '+';
             } else if (tong < 2000) {
                 state = `a bit devoted but I'll allow`;
+                h_wght = '?';
             } else if (tong < 2500) {
                 state = `this is out of hand`;
+                h_wght = '$';
             } else if (tong < 3000) {
                 state = `too radical already!`;
+                h_wght = '&';
             } else {
                 state = '*extreme comfort zone*';
+                h_wght = '@';
             }
             let amax =
                 max_height -
@@ -575,6 +627,10 @@ function render_numberdisplay({ upper, below }) {
 
         return cmt;
     })();
+
+    style_[1].textContent = `body > div {
+        content: '${heart[countheart].replaceAll('@', h_wght)}';
+    }`;
 
     for (let a = 1; a < numberdisplay.length - 1; a++) {
         let cmt = '';
@@ -619,12 +675,9 @@ function delay(time) {
     delay_ = time;
 }
 
-function winclose() {
-    close();
-}
+function winclose() {}
 
 // function for changing the graph
-let start_check = 0;
 let timeout = null;
 
 const para_funcs = {
@@ -636,9 +689,9 @@ const para_funcs = {
     exerc_: 0,
     fail_: 0,
     poor_: 0,
-    learnppl_: 0,
-    learnown_: 0,
+    learn_: 0,
     unlearn_: 0,
+    relearn_: 0,
     prac_: 0,
     OT_: 0,
     peer_: 0,
@@ -691,21 +744,21 @@ const para_funcs = {
         gap_ -= 7;
         log2('Poverty', `x${++this.poor_}`);
     },
-    learnppl() {
+    learn() {
         length += 8;
         gap_ -= 5;
-        log1('Learn_from_other_people', `x${++this.learnppl_}`);
+        log1('Learn', `x${++this.learn_}`);
     },
-    learnown() {
+    unlearn() {
         length -= 8;
         height += 7;
         gap_ += 2;
-        log1('Learn_on_your_own', `x${++this.learnown_}`);
+        log1('Unlearn', `x${++this.unlearn_}`);
     },
-    unlearn() {
+    relearn() {
         length += 5;
         elevation += 3;
-        log1('Unlearn', `x${++this.unlearn_}`);
+        log1('Relearn', `x${++this.relearn_}`);
     },
     prac() {
         height += 4;
@@ -750,7 +803,7 @@ for (let i = 0; i < allparas.length; i++) {
 start_.onclick = function () {
     start_.classList.toggle('pressed');
     stop = !stop;
-    if (start_check++ % 2 == 0) {
+    if (!stop) {
         //stop = false;
         myrequest = requestAnimationFrame(animation);
         for (let i = 0; i < allparas.length; i++) {

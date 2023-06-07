@@ -11,13 +11,9 @@ devtoolschange_func({ detail: devtools });
 
 // Get notified when it's opened/closed or orientation changes
 window.addEventListener('devtoolschange', devtoolschange_func);
-window.onresize = _.debounce(async function () {
-    start_.disabled = true;
-    if (
-        !devtools.isOpen ||
-        devtoolopenfirst ||
-        devtools.orientation === 'horizontal'
-    ) {
+window.onresize = _.debounce(function () {
+    init_anim = false;
+    if (!devtools.isOpen || devtoolopenfirst) {
         return;
     }
     if (matchMedia('(max-aspect-ratio: 300/950)').matches) {
@@ -25,49 +21,53 @@ window.onresize = _.debounce(async function () {
             return;
         }
         div_welcome.innerHTML = '';
-        for (let i = 0; i < fullhtml.length; i++) {
-            await wait(100);
-            body.prepend(fullhtml[i]);
-        }
-        start_.disabled = false;
+        init_anim = true; //
+        removeprepend(true);
     } else {
-        if (
-            div_welcome.innerHTML ==
-            'Widen the Devtool by dragging its edge until a TV remote control shows up'
-        ) {
+        stop_();
+        if (devtools.orientation == 'horizontal') {
+            if (div_welcome.innerHTML == needvertical) {
+                return;
+            }
+            div_welcome.innerHTML = needvertical;
+        } else if (div_welcome.innerHTML == widenit) {
             return;
-        }
-        div_welcome.innerHTML =
-            'Widen the Devtool by dragging its edge until a TV remote control shows up';
-        for (let i = 0; i < fullhtml.length; i++) {
-            fullhtml[i].remove();
-        }
+        } else {
+            div_welcome.innerHTML = widenit;
+        } //
+        removeprepend(false);
     }
 }, 1000);
 
 function devtoolschange_func({ detail: { isOpen, orientation } }) {
     //console.log('Is DevTools open:', event.detail.isOpen);
     //console.log('DevTools orientation:', event.detail.orientation);
+    stop_();
+    init_anim = false;
     if (isOpen) {
-        if (orientation === 'vertical') {
-            div_welcome.innerHTML =
-                'Widen the Devtool by dragging its edge until a TV remote control shows up';
-
-            window.addEventListener('resize', windowresize_func);
-        } else {
-            div_welcome.innerHTML = 'The Devtool needs to be vertical!';
+        if (hasbeenopen) {
+            return;
         }
+        if (orientation === 'horizontal') {
+            div_welcome.innerHTML = needvertical;
+        } else {
+            div_welcome.innerHTML = widenit;
+        }
+        window.addEventListener('resize', windowresize_func);
+        hasbeenopen = true;
     } else {
-        div_welcome.innerHTML =
-            'Right click on THIS BLUE BOX & Select "Inspect"';
+        div_welcome.innerHTML = rightclick;
         devtoolopenfirst = true;
+        hasbeenopen = false;
+        removeprepend(false);
+        style_[0].textContent = '';
     }
 }
 
 function windowresize_func(event) {
     window.removeEventListener('resize', windowresize_func);
     setTimeout(() => {
-        style_.textContent = `@media (max-aspect-ratio: 300/950) {
+        style_[0].textContent = `@media (max-aspect-ratio: 300/950) {
             welcome---to---đo---điện---tâm---đồ---máy {
                 display: none !important;
             }
@@ -82,4 +82,34 @@ function windowresize_func(event) {
         }`;
         devtoolopenfirst = false;
     }, 1000);
+}
+
+function stop_() {
+    start_.disabled = true;
+    stop = true;
+    for (let i = 0; i < allparas.length; i++) {
+        allparas[i].disabled = true;
+    }
+    start_.innerHTML = 'START';
+    start_.classList.remove('pressed');
+}
+
+async function removeprepend(x) {
+    if (x) {
+        for (let i = 0; i < fullhtml.length; i++) {
+            if (init_anim) {
+                await wait(50);
+                body.prepend(fullhtml[i]);
+            }
+        }
+
+        start_.disabled = false;
+    } else {
+        for (let i = fullhtml.length - 1; i >= 0; i--) {
+            if (!init_anim) {
+                await wait(50);
+                fullhtml[i].remove();
+            }
+        }
+    }
 }

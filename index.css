@@ -72,7 +72,8 @@ remote-control button.bot {
     align-self: end;
 }
 
-input-log {
+input-log,
+body > div {
     display: none;
 }
 
