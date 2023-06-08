@@ -86,7 +86,6 @@ body > div {
 #b_3 {
     background-color: red;
     color: white;
-    font-size: 3.5vh;
 }
 
 #b_19 {
@@ -114,6 +113,14 @@ body > div {
 #b_14.pressed {
     background-color: rgb(255, 94, 0);
     color: white;
+}
+
+#b_14::after {
+    content: 'START';
+}
+
+#b_14.pressed::after {
+    content: 'STOP';
 }
 
 /*-----------*/

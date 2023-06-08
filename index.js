@@ -70,11 +70,14 @@ let slogan, so, numdisplay_init, heart;
 const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
 const style_ = $$('style');
 const start_ = $('#b_14');
+const reset_ = $('#b_3');
 const allparas = $$('.para');
 const sttlog1 = $create('input-log');
 const sttlog2 = $create('input-log');
 const log1 = sttlog1.setAttribute.bind(sttlog1);
 const log2 = sttlog2.setAttribute.bind(sttlog2);
+const log1rmv = sttlog1.removeAttribute.bind(sttlog1);
+const log2rmv = sttlog2.removeAttribute.bind(sttlog2);
 
 // locals
 const divs = [];
@@ -219,9 +222,7 @@ async function animation(now) {
         }
     }
     await wait(delay_);
-    if (!stop) {
-        myrequest = requestAnimationFrame(animation);
-    }
+    myrequest = stop ? null : requestAnimationFrame(animation);
 }
 template_generate();
 clock_generate();
@@ -620,7 +621,41 @@ function delay(time) {
     delay_ = time;
 }
 
-function winclose() {}
+function reset() {
+    length = 5;
+    height = 40;
+    sharpness = 10;
+    gap_ = 3;
+    gapicon_ = '-';
+    eleicon = '<3';
+    highestheight = 50;
+    elevation = 1;
+    para_funcs.eat_ =
+        para_funcs.sleep_ =
+        para_funcs.ent_ =
+        para_funcs.shit_ =
+        para_funcs.sex_ =
+        para_funcs.exerc_ =
+        para_funcs.fail_ =
+        para_funcs.poor_ =
+        para_funcs.learn_ =
+        para_funcs.unlearn_ =
+        para_funcs.relearn_ =
+        para_funcs.prac_ =
+        para_funcs.OT_ =
+        para_funcs.peer_ =
+        para_funcs.finance_ =
+        para_funcs.fren_ =
+        para_funcs.fam_ =
+            0;
+    while (sttlog1.attributes.length > 0) {
+        log1rmv(sttlog1.attributes[0].name);
+    }
+    while (sttlog2.attributes.length > 0) {
+        log2rmv(sttlog2.attributes[0].name);
+    }
+    template_generate();
+}
 
 // function for changing the graph
 let timeout = null;
@@ -741,27 +776,17 @@ const para_funcs = {
     },
 };
 for (let i = 0; i < allparas.length; i++) {
-    allparas[i].disabled = true;
     allparas[i].onclick = para_onclick;
 }
 
 start_.onclick = function () {
     start_.classList.toggle('pressed');
     stop = !stop;
-    if (!stop) {
-        //stop = false;
-        myrequest = requestAnimationFrame(animation);
-        for (let i = 0; i < allparas.length; i++) {
-            allparas[i].disabled = false;
-        }
-        start_.innerHTML = 'STOP';
-    } else {
-        //stop = true;
-        for (let i = 0; i < allparas.length; i++) {
-            allparas[i].disabled = true;
-        }
-        start_.innerHTML = 'START';
+    for (let i = 0; i < allparas.length; i++) {
+        allparas[i].disabled = stop ? true : false;
     }
+    reset_.disabled = stop ? true : false;
+    myrequest = stop ? null : requestAnimationFrame(animation);
 };
 
 setInterval(function () {

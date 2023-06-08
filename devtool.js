@@ -80,12 +80,11 @@ function windowresize_func(event) {
 }
 
 function stop_() {
-    start_.disabled = true;
-    stop = true;
+    start_.disabled = stop = true;
     for (let i = 0; i < allparas.length; i++) {
         allparas[i].disabled = true;
     }
-    start_.innerHTML = 'START';
+    reset_.disabled = true;
     start_.classList.remove('pressed');
     console.clear();
 }
