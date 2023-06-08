@@ -17,6 +17,7 @@ const needvertical = 'The Devtool needs to be vertical!';
 const widenit =
     'Widen the Devtool by dragging its edge until a TV remote control shows up';
 const rightclick = 'Right click on THIS BLUE BOX & Select "Inspect"';
+const max_height = 100;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
 {
@@ -84,19 +85,12 @@ let transition = [];
 let template_cmt = [];
 let fullhtml = [];
 let slogan_ = [];
-let currentdate = '00:00:00';
 let numberdisplay = [];
+let currentdate = '00:00:00';
 let elevation_ = 1;
-let transready = false;
-let genready = true;
 let transcount = 0;
-const max_height = 100;
-let devtoolopenfirst = true;
 let count2 = 0;
 let countheart = 0;
-let init_anim = false;
-let hasbeenopen = false;
-let cs_check = true;
 let cs_color1 = 'yellow';
 let cs_color2 = 'red';
 
@@ -113,16 +107,21 @@ let delay_ = 100;
 
 // animation loop
 let myrequest;
-let stop = true;
 let count = 0;
 let last = 0;
 let last_ = 0;
 let datecheck = true;
-let cscheck = true;
+let cs_frame = true;
+let stop = true;
+
+// check
+let init_anim = false;
+let cs_color = true;
+let devtoolopenfirst = true;
+let transready = false;
+let genready = true;
 
 // setup html
-const frag = document.createDocumentFragment();
-const frag2 = document.createDocumentFragment();
 
 for (let i = 0; i <= 59; i++) {
     let div = $create('div');
@@ -132,15 +131,11 @@ for (let i = 0; i <= 59; i++) {
         this.setAttribute('id', below);
         this.setAttribute('class', upper);
     };
-    frag.prepend(div);
     divs.unshift(div);
 }
 
 (() => {
-    let { slope: m4, intercept: c4 } = e_line(
-        { x: max_height - 3, y: 10 },
-        { x: 24, y: 0 }
-    );
+    let [m4, c4] = e_line(max_height - 3, 10, 24, 0);
     for (let a = 0; a <= 10; a++) {
         let x4 = Math.round((a - c4) / m4);
         let cmt = $createcomment(
@@ -160,20 +155,17 @@ for (let i = 0; i <= 59; i++) {
                 return cmt;
             })()
         );
-        frag.prepend(cmt);
         cmts.unshift(cmt);
     }
 })();
 
 for (let a = 0; a < 4; a++) {
     let cmt = $createcomment('');
-    frag.prepend(cmt);
     clocks.unshift(cmt);
 }
 
 for (let a = 0; a < slogan.length; a++) {
     let cmt = $createcomment(slogan[a]);
-    frag2.prepend(cmt);
     slogan_.unshift(cmt);
 }
 
@@ -181,14 +173,8 @@ for (let a = 0; a < so[0].length; a++) {
     let cmt = $createcomment('');
     numberdisplay.unshift(cmt);
 }
-
-{
-    let cmt1 = $createcomment(numdisplay_init[0]);
-    numberdisplay.unshift(cmt1);
-    let cmt2 = $createcomment(numdisplay_init[1]);
-    numberdisplay.push(cmt2);
-}
-
+numberdisplay.unshift($createcomment(numdisplay_init[0]));
+numberdisplay.push($createcomment(numdisplay_init[1]));
 render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } });
 
 fullhtml = slogan_
@@ -205,25 +191,24 @@ fullhtml = slogan_
     .reverse();
 
 body.prepend(div_welcome);
-Object.freeze(divs);
 
 async function animation(now) {
     if (!last || now - last >= 1000) {
         last = now;
         datecheck = true;
-        cs_check = !cs_check;
+        cs_color = !cs_color;
     }
     if (!last_ || now - last_ >= 300) {
         last_ = now;
-        cscheck = true;
+        cs_frame = true;
     }
     if (!genready) {
         render_first(template[count]);
         render_numberdisplay(template[count]);
         render_comment();
-        if (cscheck) {
+        if (cs_frame) {
             render_console();
-            cscheck = false;
+            cs_frame = false;
         }
         render_toptobot();
         if (++count == template.length) {
@@ -263,15 +248,11 @@ function render_console() {
     console.clear();
     for (let a = 15; a > 0; a--) {
         for (let i = 1; i <= 59; i++) {
-            if (cslog[i - 1] == a) {
-                log += '--';
-            } else {
-                log += '  ';
-            }
+            log += cslog[i - 1] == a ? '--' : '  ';
         }
         log += '\n';
     }
-    console.log(log, `color: ${cs_check ? cs_color1 : cs_color2}`);
+    console.log(log, `color: ${cs_color ? cs_color1 : cs_color2}`);
 }
 
 function template_generate() {
@@ -392,45 +373,33 @@ function template_generate() {
 function template_cmt_generate() {
     for (let i = 0; i <= template.length - 1; i++) {
         let temp = [];
-        let { slope: m, intercept: c } = e_line(
-            { x: 14 + 2 * elevation, y: 0 },
-            { x: template[i].u + 13 + 2 * elevation, y: 10 }
+        let [m, c] = e_line(
+            14 + 2 * elevation,
+            0,
+            template[i].u + 13 + 2 * elevation,
+            10
         );
-        let { slope: m_, intercept: c_ } = e_line(
-            { x: 5, y: 0 },
-            { x: 4 + 2 * elevation, y: 10 }
-        );
-        let { slope: m4, intercept: c4 } = e_line(
-            { x: max_height - 3, y: 0 },
-            { x: template[i].u + 21 + 2 * elevation, y: 10 }
+        let [m_, c_] = e_line(5, 0, 4 + 2 * elevation, 10);
+        let [m4, c4] = e_line(
+            max_height - 3,
+            0,
+            template[i].u + 21 + 2 * elevation,
+            10
         );
 
         for (let y = 0; y <= cmts.length - 1; y++) {
             let tempcmt = '';
-            let x;
-            if (m === Infinity) {
-                x = 14 + 2 * elevation;
-            } else {
-                x = Math.round((y - c) / m);
-            }
-            let x4;
-            if (m4 === Infinity) {
-                x4 = max_height - 3;
-            } else {
-                x4 = Math.round((y - c4) / m4);
-            }
+            let x =
+                m === Infinity ? 14 + 2 * elevation : Math.round((y - c) / m);
+            let x4 =
+                m4 === Infinity ? max_height - 3 : Math.round((y - c4) / m4);
             let x1 =
                 14 +
                 2 * elevation +
                 Math.round(((x - (14 + 2 * elevation)) / 5) * 3);
             let x2 =
                 14 + 2 * elevation + Math.round((x - (14 + 2 * elevation)) / 4);
-            let x_;
-            if (i % 2 == 0) {
-                x_ = 5;
-            } else {
-                x_ = Math.round((y - c_) / m_);
-            }
+            let x_ = i % 2 == 0 ? 5 : Math.round((y - c_) / m_);
             for (let i = 0; i <= max_height; i++) {
                 if (i == x2) {
                     tempcmt += 'B';
@@ -622,11 +591,11 @@ function render_numberdisplay({ upper, below }) {
         for (let b = 0; b < tong.length; b++) {
             cmt += `..${so[tong[b]][a - 1]}`;
         }
-        let cmtlength = cmt.length;
         for (let b = 0; b < currentdate.length; b++) {
             cmt2 += `..${so[currentdate[b]][a - 1]}`;
         }
-        for (let b = 0; b <= max_height - cmtlength - cmt2.length; b++) {
+        let bmax = max_height - cmt.length - cmt2.length;
+        for (let b = 0; b <= bmax; b++) {
             cmt += '.';
         }
 
@@ -634,16 +603,9 @@ function render_numberdisplay({ upper, below }) {
     }
 }
 
-function e_line(point1, point2) {
-    const slope = (point2.y - point1.y) / (point2.x - point1.x);
-    const intercept = point1.y - slope * point1.x;
-
-    const equation = {
-        slope,
-        intercept,
-    };
-
-    return equation;
+function e_line(x1, y1, x2, y2) {
+    const slope = (y2 - y1) / (x2 - x1);
+    return [slope, y1 - slope * x1];
 }
 
 function wait(delay) {

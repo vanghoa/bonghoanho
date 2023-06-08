@@ -45,20 +45,15 @@ function devtoolschange_func({ detail: { isOpen, orientation } }) {
     stop_();
     init_anim = false;
     if (isOpen) {
-        if (hasbeenopen) {
+        if (!devtoolopenfirst) {
             return;
         }
-        if (orientation === 'horizontal') {
-            div_welcome.innerHTML = needvertical;
-        } else {
-            div_welcome.innerHTML = widenit;
-        }
+        div_welcome.innerHTML =
+            orientation === 'horizontal' ? needvertical : widenit;
         window.addEventListener('resize', windowresize_func);
-        hasbeenopen = true;
     } else {
         div_welcome.innerHTML = rightclick;
         devtoolopenfirst = true;
-        hasbeenopen = false;
         removeprepend(false);
         style_[0].textContent = '';
     }
