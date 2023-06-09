@@ -2,8 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
 }
@@ -26,7 +24,7 @@ welcome---to---đo---điện---tâm---đồ---máy,
 for-mobile {
     display: block;
     padding: 20px;
-    max-width: 400px;
+    max-width: min(300px, 50%);
     background-color: black;
     color: white;
 }
@@ -74,11 +72,6 @@ remote-control button.top {
 
 remote-control button.bot {
     align-self: end;
-}
-
-input-log,
-body > div {
-    display: none;
 }
 
 /*-----------*/

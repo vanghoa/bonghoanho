@@ -16,7 +16,7 @@ clock.skt = 7;
 const needvertical = 'The Devtool needs to be vertical!';
 const widenit =
     'Widen the Devtool by dragging its edge until a TV remote control shows up';
-const rightclick = 'Right click on THIS BLUE BOX & Select "Inspect"';
+const rightclick = 'Right click on THIS BOX & Select "Inspect"';
 const max_height = 100;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
@@ -242,17 +242,21 @@ function render_toptobot() {
 
 function render_console() {
     let cslog = [];
-    let log = '%c';
+    let log =
+        '%c ______________________________________________________________________________________________________________________\n/                                                                                                                      \\\n';
     for (let i = 1; i <= 59; i++) {
         cslog.push(Math.round(map(divs[i - 1].upper.length, 0, 60, 1, 15)));
     }
     console.clear();
     for (let a = 15; a > 0; a--) {
+        log += '{';
         for (let i = 1; i <= 59; i++) {
-            log += cslog[i - 1] == a ? '--' : '  ';
+            log += cslog[i - 1] == a ? '@@' : '  ';
         }
-        log += '\n';
+        log += '}\n';
     }
+    log +=
+        '\\______________________________________________________________________________________________________________________/';
     console.log(log, `color: ${cs_color ? cs_color1 : cs_color2}`);
 }
 
