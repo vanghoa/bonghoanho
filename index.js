@@ -13,10 +13,11 @@ const body = document.body;
 const TWO_PI = 2 * Math.PI;
 const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
 clock.skt = 7;
-const needvertical = 'The Devtool needs to be vertical!';
+const needvertical = 'The Developer-Tools needs to be vertical!';
 const widenit =
-    'Widen the Devtool by dragging its edge until a TV remote control shows up';
-const rightclick = 'Right click on THIS BOX & Select "Inspect"';
+    'Widen the Developer-Tools by dragging its edge until a TV remote control shows up';
+const rightclick =
+    'RIGHT click on THIS BOX & Select "Inspect" (I recommend browsers with access to Developer-Tools, e.g., Chrome, Microsoft Edge, Firefox,...)';
 const max_height = 100;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
@@ -71,6 +72,8 @@ const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
 const style_ = $$('style');
 const start_ = $('#b_14');
 const reset_ = $('#b_3');
+const showcons_ = $('#b_22');
+const showcss_ = $('#b_23');
 const allparas = $$('.para');
 const sttlog1 = $create('input-log');
 const sttlog2 = $create('input-log');
@@ -89,6 +92,10 @@ let template_cmt = [];
 let fullhtml = [];
 let slogan_ = [];
 let numberdisplay = [];
+let bub_yoff = [];
+for (let f = 0; f <= 800; f++) {
+    bub_yoff.push(Math.round(map(noise.simplex2(f / 20, f / 5), -1, 1, -5, 5)));
+}
 let currentdate = '00:00:00';
 let elevation_ = 1;
 let transcount = 0;
@@ -123,6 +130,8 @@ let cs_color = true;
 let devtoolopenfirst = true;
 let transready = false;
 let genready = true;
+let showcss = false;
+let showcons = false;
 
 // setup html
 
@@ -210,7 +219,10 @@ async function animation(now) {
         render_numberdisplay(template[count]);
         render_comment();
         if (cs_frame) {
-            render_console();
+            console.clear();
+            if (showcons) {
+                render_console();
+            }
             cs_frame = false;
         }
         render_toptobot();
@@ -247,7 +259,6 @@ function render_console() {
     for (let i = 1; i <= 59; i++) {
         cslog.push(Math.round(map(divs[i - 1].upper.length, 0, 60, 1, 15)));
     }
-    console.clear();
     for (let a = 15; a > 0; a--) {
         log += '{';
         for (let i = 1; i <= 59; i++) {
@@ -376,6 +387,65 @@ function template_generate() {
 }
 
 function template_cmt_generate() {
+    const cir_Y = (x, r, xc, yc) => {
+        const _ = Math.round(Math.sqrt(r ** 2 - (x - xc) ** 2));
+        return [yc + _, yc - _];
+    };
+    const frames = template.length;
+    const ylength = cmts.length;
+    const xlength = max_height + 1;
+    let r = Math.round(Math.random() * (5 - 3) + 3);
+    let lo = Math.ceil(r / 2);
+    let speed = Math.ceil((xlength + 2 * r - lo) / frames);
+    let x_start = -2 * r + lo;
+    let x_cen = -r + lo;
+    let y_cen = Math.round(Math.random() * (ylength - 1));
+    const bub_arr = Array.from({ length: frames }, () =>
+        Array.from({ length: ylength }, () =>
+            Array.from({ length: xlength }, () => {
+                return false;
+            })
+        )
+    );
+    let bub_yoff_order = Math.round(Math.random() * (799 - frames));
+    for (let f = 0; f < frames; f++) {
+        let y_cen_ = y_cen + bub_yoff[f + bub_yoff_order];
+        let yarr = [];
+        let yarr_ = 0;
+        for (let x = x_start; x <= x_start + 2 * r; x++) {
+            const [y1, y2] = cir_Y(x, r, x_cen, y_cen_);
+            if (x >= 0 && x < xlength) {
+                if (y1 >= 0 && y1 < ylength) {
+                    bub_arr[f][y1][x] = true;
+                    yarr.push(y1);
+                }
+                if (y2 >= 0 && y2 < ylength) {
+                    bub_arr[f][y2][x] = true;
+                    yarr.push(y2);
+                }
+            }
+        }
+        yarr.sort((a, b) => a - b);
+
+        for (let y = y_cen_ - r; y <= y_cen_ + r; y++) {
+            if (yarr[yarr_] == y) {
+                yarr_++;
+                continue;
+            }
+            const [x1, x2] = cir_Y(y, r, y_cen_, x_cen);
+            if (y >= 0 && y < ylength) {
+                if (x1 >= 0 && x1 < xlength) {
+                    bub_arr[f][y][x1] = true;
+                }
+                if (x2 >= 0 && x2 < xlength) {
+                    bub_arr[f][y][x2] = true;
+                }
+            }
+        }
+        x_start += speed;
+        x_cen += speed;
+    }
+    ////////////////////////////////////////////////////////////////
     for (let i = 0; i <= template.length - 1; i++) {
         let temp = [];
         let [m, c] = e_line(
@@ -405,17 +475,19 @@ function template_cmt_generate() {
             let x2 =
                 14 + 2 * elevation + Math.round((x - (14 + 2 * elevation)) / 4);
             let x_ = i % 2 == 0 ? 5 : Math.round((y - c_) / m_);
-            for (let i = 0; i <= max_height; i++) {
-                if (i == x2) {
+            for (let w = 0; w <= max_height; w++) {
+                if (w == x2) {
                     tempcmt += 'B';
-                } else if (i == x_) {
+                } else if (w == x_) {
                     tempcmt += '0';
-                } else if (i == x1) {
+                } else if (w == x1) {
                     tempcmt += 'I';
-                } else if (i == x) {
+                } else if (w == x) {
                     tempcmt += 'P';
-                } else if (i == x4) {
+                } else if (w == x4) {
                     tempcmt += 'K';
+                } else if (bub_arr[i][y][w]) {
+                    tempcmt += '@';
                 } else {
                     tempcmt += '.';
                 }
@@ -585,11 +657,13 @@ function render_numberdisplay({ upper, below }) {
         return cmt;
     })();
 
-    style_[1].textContent = `body > div {
+    style_[1].textContent = showcss
+        ? `body > div {
         content: 'my heart: ${Math.round((tong_ / 1700) * 100)}% ${heart[
-        countheart
-    ].replaceAll('@', h_wght)}';
-    }`;
+              countheart
+          ].replaceAll('@', h_wght)}';
+    }`
+        : '';
 
     for (let a = 1; a < numberdisplay.length - 1; a++) {
         let cmt = '';
@@ -786,13 +860,28 @@ for (let i = 0; i < allparas.length; i++) {
 }
 
 start_.onclick = function () {
-    start_.classList.toggle('pressed');
+    this.classList.toggle('pressed');
     stop = !stop;
     for (let i = 0; i < allparas.length; i++) {
         allparas[i].disabled = stop ? true : false;
     }
-    reset_.disabled = stop ? true : false;
+    reset_.disabled =
+        showcss_.disabled =
+        showcons_.disabled =
+            stop ? true : false;
     myrequest = stop ? null : requestAnimationFrame(animation);
+};
+
+showcss_.onclick = function () {
+    this.classList.toggle('pressed');
+    showcss = !showcss;
+    this.innerHTML = showcss ? 'see Styles' : 'show in css';
+};
+
+showcons_.onclick = function () {
+    this.classList.toggle('pressed');
+    showcons = !showcons;
+    this.innerHTML = showcons ? 'see Console' : 'show in console';
 };
 
 setInterval(function () {
@@ -805,7 +894,7 @@ setInterval(function () {
         checkthu();
         template_generate();
     }
-}, 5000);
+}, 8000);
 
 function para_onclick(e) {
     if (timeout !== null) {
@@ -816,7 +905,7 @@ function para_onclick(e) {
         //
         template_generate();
         timeout = null;
-    }, 1500);
+    }, 2000);
     para_funcs[e.target.getAttribute('para')]();
 }
 

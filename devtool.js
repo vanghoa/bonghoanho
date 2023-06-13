@@ -16,7 +16,7 @@ window.onresize = _.debounce(function () {
     if (!devtools.isOpen || devtoolopenfirst) {
         return;
     }
-    if (matchMedia('(max-aspect-ratio: 300/950)').matches) {
+    if (matchMedia('(max-aspect-ratio: 310/950)').matches) {
         if (div_welcome.innerHTML == '') {
             return;
         }
@@ -62,7 +62,7 @@ function devtoolschange_func({ detail: { isOpen, orientation } }) {
 function windowresize_func(event) {
     window.removeEventListener('resize', windowresize_func);
     setTimeout(() => {
-        style_[0].textContent = `@media (max-aspect-ratio: 300/950) {
+        style_[0].textContent = `@media (max-aspect-ratio: 310/950) {
             welcome---to---đo---điện---tâm---đồ---máy {
                 display: none !important;
             }
@@ -86,7 +86,7 @@ function stop_() {
     }
     reset_.disabled = true;
     start_.classList.remove('pressed');
-    console.clear();
+    //console.clear();
 }
 
 async function removeprepend(x) {

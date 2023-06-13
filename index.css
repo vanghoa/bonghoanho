@@ -92,6 +92,12 @@ remote-control button.bot {
 #b_21 {
     background-color: rgb(255, 234, 0);
 }
+/*-----------*/
+
+#b_22.pressed,
+#b_23.pressed {
+    background-color: rgb(47, 255, 0);
+}
 
 /*-----------*/
 
