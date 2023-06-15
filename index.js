@@ -409,11 +409,12 @@ function template_cmt_generate() {
     );
     let bub_yoff_order = Math.round(Math.random() * (799 - frames));
     for (let f = 0; f < frames; f++) {
-        let y_cen_ = y_cen + bub_yoff[f + bub_yoff_order];
+        let y_cen_ = y_cen + bub_yoff[f + bub_yoff_order] * 2;
+        let r_ = r - bub_yoff[f + bub_yoff_order];
         let yarr = [];
         let yarr_ = 0;
-        for (let x = x_start; x <= x_start + 2 * r; x++) {
-            const [y1, y2] = cir_Y(x, r, x_cen, y_cen_);
+        for (let x = x_start; x <= x_start + 2 * r_; x++) {
+            const [y1, y2] = cir_Y(x, r_, x_cen, y_cen_);
             if (x >= 0 && x < xlength) {
                 if (y1 >= 0 && y1 < ylength) {
                     bub_arr[f][y1][x] = true;
@@ -427,12 +428,12 @@ function template_cmt_generate() {
         }
         yarr.sort((a, b) => a - b);
 
-        for (let y = y_cen_ - r; y <= y_cen_ + r; y++) {
+        for (let y = y_cen_ - r_; y <= y_cen_ + r_; y++) {
             if (yarr[yarr_] == y) {
                 yarr_++;
                 continue;
             }
-            const [x1, x2] = cir_Y(y, r, y_cen_, x_cen);
+            const [x1, x2] = cir_Y(y, r_, y_cen_, x_cen);
             if (y >= 0 && y < ylength) {
                 if (x1 >= 0 && x1 < xlength) {
                     bub_arr[f][y][x1] = true;
