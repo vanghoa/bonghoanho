@@ -12,18 +12,21 @@ devtoolschange_func({ detail: devtools });
 // Get notified when it's opened/closed or orientation changes
 window.addEventListener('devtoolschange', devtoolschange_func);
 window.onresize = _.debounce(function () {
-    init_anim = false;
     if (!devtools.isOpen || devtoolopenfirst) {
         return;
+        init_anim = false;
     }
     if (matchMedia('(max-aspect-ratio: 310/950)').matches) {
         if (div_welcome.innerHTML == '') {
+            init_anim = true;
             return;
         }
         div_welcome.innerHTML = '';
         init_anim = true; //
+        console.log('nice');
         removeprepend(true);
     } else {
+        init_anim = false;
         stop_();
         if (devtools.orientation == 'horizontal') {
             if (div_welcome.innerHTML == needvertical) {
