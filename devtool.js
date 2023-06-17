@@ -23,7 +23,6 @@ window.onresize = _.debounce(function () {
         }
         div_welcome.innerHTML = '';
         init_anim = true; //
-        console.log('nice');
         removeprepend(true);
     } else {
         init_anim = false;
