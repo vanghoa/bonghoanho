@@ -13,8 +13,8 @@ devtoolschange_func({ detail: devtools });
 window.addEventListener('devtoolschange', devtoolschange_func);
 window.onresize = _.debounce(function () {
     if (!devtools.isOpen || devtoolopenfirst) {
-        return;
         init_anim = false;
+        return;
     }
     if (matchMedia('(max-aspect-ratio: 310/950)').matches) {
         if (div_welcome.innerHTML == '') {
