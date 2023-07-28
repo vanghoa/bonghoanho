@@ -27,6 +27,15 @@ for-mobile {
     max-width: min(300px, 50%);
     background-color: black;
     color: white;
+    font-weight: 100;
+}
+
+welcome---to---đo---điện---tâm---đồ---máy div {
+    font-weight: 100;
+}
+
+welcome---to---đo---điện---tâm---đồ---máy a {
+    color: white;
 }
 
 remote-control {

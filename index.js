@@ -16,8 +16,7 @@ clock.skt = 7;
 const needvertical = 'The Developer-Tools needs to be vertical!';
 const widenit =
     'Widen the Developer-Tools by dragging its edge until a TV remote control shows up';
-const rightclick =
-    'RIGHT click on THIS BOX & Select "Inspect" (I recommend browsers with access to Developer-Tools, e.g., Chrome, Microsoft Edge, Firefox,...)';
+const rightclick = $('welcome---to---đo---điện---tâm---đồ---máy').innerHTML;
 const max_height = 100;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
