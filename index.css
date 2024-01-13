@@ -10,6 +10,7 @@ remote-control,
 body {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     overflow: hidden;
 }
@@ -55,7 +56,6 @@ remote-control button {
     height: 8vh;
     border-radius: 30px;
     word-wrap: break-word;
-    word-break: break-all;
     font-size: 1.3vh;
 }
 
@@ -90,22 +90,29 @@ remote-control button.bot {
     color: white;
 }
 
-#b_19 {
+#b_23 {
     background-color: rgb(255, 72, 225);
 }
 
-#b_20 {
+#b_24 {
     background-color: rgb(1, 208, 255);
 }
 
-#b_21 {
+#b_22 {
     background-color: rgb(255, 234, 0);
 }
 /*-----------*/
 
 #b_22.pressed,
-#b_23.pressed {
+#b_23.pressed,
+#b_24.pressed {
     background-color: rgb(47, 255, 0);
+}
+
+#b_19,
+#b_20,
+#b_21 {
+    background-color: blanchedalmond;
 }
 
 /*-----------*/
@@ -275,6 +282,12 @@ body {
 
 for-mobile {
     display: none;
+}
+
+eyes {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
 }
 
 @media (hover: none) and (pointer: coarse) {

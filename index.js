@@ -73,9 +73,12 @@ const start_ = $('#b_14');
 const reset_ = $('#b_3');
 const showcons_ = $('#b_22');
 const showcss_ = $('#b_23');
+const showeyes_ = $('#b_24');
 const allparas = $$('.para');
+const allbuttons = [showcons_, showcss_, showeyes_, ...allparas];
 const sttlog1 = $create('input-log');
 const sttlog2 = $create('input-log');
+const eyes_devider = $create('eye-eye');
 const log1 = sttlog1.setAttribute.bind(sttlog1);
 const log2 = sttlog2.setAttribute.bind(sttlog2);
 const log1rmv = sttlog1.removeAttribute.bind(sttlog1);
@@ -85,6 +88,7 @@ const log2rmv = sttlog2.removeAttribute.bind(sttlog2);
 const divs = [];
 const cmts = [];
 const clocks = [];
+const eyes = [];
 let template = [];
 let transition = [];
 let template_cmt = [];
@@ -119,6 +123,7 @@ let myrequest;
 let count = 0;
 let last = 0;
 let last_ = 0;
+let last__ = 0;
 let datecheck = true;
 let cs_frame = true;
 let stop = true;
@@ -129,8 +134,23 @@ let cs_color = true;
 let devtoolopenfirst = true;
 let transready = false;
 let genready = true;
-let showcss = false;
-let showcons = false;
+let showcss,
+    showeyes,
+    showcons = false;
+
+// eyes
+const video = $('video');
+const canvas = $('canvas');
+const ctx = canvas.getContext('2d');
+const cwidth = 40,
+    cheight = 10;
+const ewidth_diff = 6;
+const ewidth = cwidth + ewidth_diff + 2;
+const h_cheight = Math.round(cheight / 2);
+const h_cwidth = Math.round(cwidth / 2);
+const blink_cheight = Math.round(cheight / 3);
+const gradient = '___...--:!/r(l1Z4H9W8$@';
+let videoStream;
 
 // setup html
 
@@ -186,14 +206,73 @@ for (let a = 0; a < so[0].length; a++) {
 }
 numberdisplay.unshift($createcomment(numdisplay_init[0]));
 numberdisplay.push($createcomment(numdisplay_init[1]));
+const numberdisplay_divider_1 = $createcomment(numdisplay_init[1]);
+const numberdisplay_divider_2 = $createcomment(numdisplay_init[1]);
 render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } });
+const eyes_mid = (a) => {
+    return a == h_cheight ? '╠═════╣' : '║.....║';
+};
+const eyes_left = (a) => {
+    return a == h_cheight ? '╔═════╣' : '......║';
+};
+const eyes_right = (a) => {
+    return a == h_cheight ? '╠═════╗' : '║......';
+};
+const eyes_divider_1 = $createcomment(
+    (() => {
+        let cmt = '......╔';
+        for (let i = 0; i < cwidth; i++) {
+            cmt += '═';
+        }
+        cmt += '╗.....╔';
+        for (let i = 0; i < cwidth; i++) {
+            cmt += '═';
+        }
+        cmt += '╗......';
+        return cmt;
+    })()
+);
+for (let a = 0; a < cheight; a++) {
+    let cmt = $createcomment(
+        (() => {
+            let cmt = eyes_left(a);
+            for (let i = 0; i < cwidth; i++) {
+                cmt += '`';
+            }
+            cmt += eyes_mid(a);
+            for (let i = 0; i < cwidth; i++) {
+                cmt += '`';
+            }
+            cmt += eyes_right(a);
+            return cmt;
+        })()
+    );
+    eyes.unshift(cmt);
+}
+const eyes_divider_2 = $createcomment(
+    (() => {
+        let cmt = '......╚';
+        for (let i = 0; i < cwidth; i++) {
+            cmt += '═';
+        }
+        cmt += '╝.....╚';
+        for (let i = 0; i < cwidth; i++) {
+            cmt += '═';
+        }
+        cmt += '╝......';
+        return cmt;
+    })()
+);
+
+const eyeshtml = [eyes_devider, eyes_divider_1, ...eyes, eyes_divider_2];
+const eyeshtml_i = eyeshtml.slice().reverse();
 
 fullhtml = slogan_
     .concat(
         sttlog1,
-        $createcomment(numdisplay_init[1]),
+        numberdisplay_divider_1,
         numberdisplay,
-        $createcomment(numdisplay_init[1]),
+        numberdisplay_divider_2,
         sttlog2,
         clocks,
         cmts,
@@ -201,7 +280,10 @@ fullhtml = slogan_
     )
     .reverse();
 
-body.prepend(div_welcome);
+//body.prepend(div_welcome);
+
+let isBlinking = false,
+    blinkCount = 0;
 
 async function animation(now) {
     if (!last || now - last >= 1000) {
@@ -230,6 +312,25 @@ async function animation(now) {
         }
         if (++countheart == heart.length) {
             countheart = 0;
+        }
+    }
+    if (!last__ || now - last__ >= 200) {
+        last__ = now;
+        if (showeyes) {
+            if (isBlinking) {
+                blinkCount++;
+                if (blinkCount > 3) {
+                    isBlinking = false;
+                    blinkCount = 0;
+                }
+            } else {
+                if (Math.random() < 0.05) {
+                    isBlinking = true;
+                }
+            }
+            render_cam(ctx);
+            const chars = getPixelsGreyScale(ctx);
+            render_eyes(chars);
         }
     }
     await wait(delay_);
@@ -658,7 +759,7 @@ function render_numberdisplay({ upper, below }) {
     })();
 
     style_[1].textContent = showcss
-        ? `body > div {
+        ? `body, * {
         content: 'my heart: ${Math.round((tong_ / 1700) * 100)}% ${heart[
               countheart
           ].replaceAll('@', h_wght)}';
@@ -737,6 +838,161 @@ function reset() {
     template_generate();
 }
 
+// function for eyes
+
+async function init_cam() {
+    try {
+        videoStream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false,
+        });
+        video.srcObject = videoStream;
+        video.play();
+        showeyes = true;
+        for (let i = 0; i < eyeshtml_i.length; i++) {
+            await wait(50);
+            if (!showeyes) {
+                return;
+            }
+            slogan_[slogan_.length - 1].after(eyeshtml_i[i]);
+        }
+
+        fullhtml = slogan_
+            .concat(
+                eyeshtml,
+                sttlog1,
+                numberdisplay_divider_1,
+                numberdisplay,
+                numberdisplay_divider_2,
+                sttlog2,
+                clocks,
+                cmts,
+                divs
+            )
+            .reverse();
+    } catch (e) {
+        console.log('An error occurred: ' + e);
+        stop_cam();
+    }
+}
+async function stop_cam() {
+    showeyes = false;
+    showeyes_.classList.remove('pressed');
+    showeyes_.innerHTML = 'show eyes';
+    if (videoStream) {
+        const tracks = videoStream.getTracks();
+        tracks.forEach((track) => track.stop());
+        video.srcObject = null;
+        for (let i = 0; i < eyeshtml_i.length; i++) {
+            await wait(50);
+            if (showeyes) {
+                return;
+            }
+            eyeshtml_i[i].remove();
+        }
+        fullhtml = slogan_
+            .concat(
+                sttlog1,
+                numberdisplay_divider_1,
+                numberdisplay,
+                numberdisplay_divider_2,
+                sttlog2,
+                clocks,
+                cmts,
+                divs
+            )
+            .reverse();
+    }
+}
+function clearphoto() {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, ewidth, cheight);
+}
+function render_cam(ctx) {
+    if (ewidth && cheight) {
+        canvas.width = ewidth;
+        canvas.height = cheight;
+        ctx.drawImage(video, 0, 0, ewidth, cheight);
+    } else {
+        clearphoto();
+    }
+}
+function getPixelsGreyScale(ctx) {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    let row = 0;
+    const res = new Array(cheight).fill(0).map(() => []);
+    for (let i = 0, c = 0; i < data.length; i += 4) {
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        let curr = res[row];
+        curr.push(avg);
+        if (c < ewidth) {
+            c++;
+        }
+        if (c === ewidth) {
+            c = 0;
+            row += 1;
+        }
+    }
+    return res;
+}
+function getCharByScale(scale) {
+    const val = Math.floor((scale / 255) * (gradient.length - 1));
+    return gradient[val];
+}
+function isPointInsideEllipse(x, y, center_x, center_y, a, b) {
+    const result = (x - center_x) ** 2 / a ** 2 + (y - center_y) ** 2 / b ** 2;
+
+    return result;
+}
+const render_eyes = (textDarkScale) => {
+    eyes.forEach((eye, i) => {
+        eye.nodeValue = (() => {
+            let cmt = eyes_left(i);
+            for (let k = cwidth - 1 + ewidth_diff; k >= ewidth_diff; k--) {
+                const ellipse_check = isPointInsideEllipse(
+                    7 + k - ewidth_diff,
+                    i,
+                    7 + h_cwidth,
+                    h_cheight - 0.5,
+                    h_cwidth + 0.5,
+                    h_cheight + 0.2
+                );
+                if (ellipse_check > 1) {
+                    cmt += '`';
+                    continue;
+                }
+                if (i < blink_cheight * blinkCount) {
+                    cmt += '.';
+                    continue;
+                }
+                cmt += getCharByScale(textDarkScale[i][k]);
+            }
+            cmt += eyes_mid(i);
+            for (let k = cwidth - 1; k >= 0; k--) {
+                const ellipse_check = isPointInsideEllipse(
+                    14 + cwidth + k,
+                    i,
+                    14 + cwidth + h_cwidth,
+                    h_cheight - 0.5,
+                    h_cwidth + 0.5,
+                    h_cheight + 0.2
+                );
+                if (ellipse_check > 1) {
+                    cmt += '`';
+                    continue;
+                }
+                if (i < blink_cheight * blinkCount) {
+                    cmt += '.';
+                    continue;
+                }
+                cmt += getCharByScale(textDarkScale[i][k]);
+            }
+            cmt += eyes_right(i);
+            return cmt;
+        })();
+    });
+};
 // function for changing the graph
 let timeout = null;
 
@@ -868,6 +1124,7 @@ start_.onclick = function () {
     reset_.disabled =
         showcss_.disabled =
         showcons_.disabled =
+        showeyes_.disabled =
             stop ? true : false;
     myrequest = stop ? null : requestAnimationFrame(animation);
 };
@@ -875,15 +1132,22 @@ start_.onclick = function () {
 showcss_.onclick = function () {
     this.classList.toggle('pressed');
     showcss = !showcss;
-    this.innerHTML = showcss ? 'see Styles' : 'show in css';
+    this.innerHTML = showcss ? 'see <br /> styles' : 'show <br /> in styles';
 };
 
 showcons_.onclick = function () {
     this.classList.toggle('pressed');
     showcons = !showcons;
-    this.innerHTML = showcons ? 'see Console' : 'show in console';
+    this.innerHTML = showcons ? 'see <br /> console' : 'show <br /> in console';
 };
 
+showeyes_.onclick = function () {
+    this.classList.toggle('pressed');
+    this.innerHTML = !showeyes ? 'see <br /> eyes' : 'show <br /> eyes';
+    !showeyes ? init_cam() : stop_cam();
+};
+
+// passion rate decreate over time
 setInterval(function () {
     if (!stop) {
         height -= 6;

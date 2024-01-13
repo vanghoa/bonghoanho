@@ -65,7 +65,7 @@ function windowresize_func(event) {
     window.removeEventListener('resize', windowresize_func);
     setTimeout(() => {
         style_[0].textContent = `@media (max-aspect-ratio: 310/950) {
-            welcome---to---đo---điện---tâm---đồ---máy {
+            welcome---to---đo---điện---tâm---đồ---máy, main {
                 display: none !important;
             }
 
@@ -83,8 +83,8 @@ function windowresize_func(event) {
 
 function stop_() {
     start_.disabled = stop = true;
-    for (let i = 0; i < allparas.length; i++) {
-        allparas[i].disabled = true;
+    for (let i = 0; i < allbuttons.length; i++) {
+        allbuttons[i].disabled = true;
     }
     reset_.disabled = true;
     start_.classList.remove('pressed');
@@ -102,6 +102,7 @@ async function removeprepend(x) {
 
         start_.disabled = false;
     } else {
+        await stop_cam();
         for (let i = fullhtml.length - 1; i >= 0; i--) {
             if (!init_anim) {
                 await wait(50);
