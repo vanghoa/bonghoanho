@@ -10,30 +10,114 @@
         <link rel="stylesheet" href="index.css" />
         <script src="perlin.js"></script>
         <script src="lodash.custom.min.js"></script>
-        <script defer src="index_min.js"></script>
-        <script defer type="module" src="devtool_min.js"></script>
+        <script defer src="index.js"></script>
+        <script defer type="module" src="devtool.js"></script>
         <style></style>
         <style></style>
     </head>
     <body>
-        <main>some main items</main>
+        <main>
+            <h1>Measure a machine’s heart</h1>
+            <p>
+                In this project, I gave a machine a kind of human-like passion
+                and showed how that passion either ramps up (lights up) or fades
+                away (burns out) depending on a few factors. The visual style is
+                reminiscent of the data you see on an ECG machine, and all of
+                that can be explored within the developer tools.
+            </p>
+            <p>
+                Take a look at the github
+                <a href="https://github.com/vanghoa/bonghoanho" target="_blank"
+                    >repository</a
+                >.
+            </p>
+            <img src="cover.png" alt="cover" />
+            <h2>1/ Concept – Web Development Tools:</h2>
+            <p>
+                The idea to utilize the developer tool as an output display had
+                been on my mind for quite some time. In fact, the inspiration
+                for this concept traces back to the moment I first came across
+                Everest Pipkin's work–bodies.html at
+                <a href="https://ifyoulived.org/bodies" target="_blank"
+                    >ifyoulived.org/bodies</a
+                >. This project replicates the human body within the console
+                log, as the name suggests, and it left a lasting impression on
+                me.
+            </p>
+            <img src="pipkins.png" alt="pipkins" />
+            <p>
+                My project deals with similar concept of exposing the internal
+                structure of digital entities with the Web Development Tools. I
+                find that web browsers' built-in WebDev tools are the easiest
+                for regular folks to use without having to install anything
+                extra. Plus, since developers use them a lot, they're pretty
+                like everyday objects and have the potential to be repurposed
+                for things other than development, like art.
+            </p>
+            <p>
+                On top of using developer tools as an output display, I
+                introduced an additional layer of concept by transforming the
+                website interface into a remote control. This twist effectively
+                switched the roles, with the front-end now operating as the
+                back-end and the back-end serving as the front-end.
+            </p>
+            <img src="remote.png" alt="remote" />
+            <h2>2/ Concept – Light up and burn out one’s passion:</h2>
+            <p>
+                The remote control featured a variety of buttons, each with a
+                specific function. Each button had a distinct effect on the
+                'passion' visualizer, simulating how one's enthusiasm and
+                passion could either intensify (light up) or diminish (burn
+                out). These effects were influenced by a range of internal and
+                external factors, mirroring the complexities of real-life
+                experiences where passion can fluctuate due to various
+                influences.
+            </p>
+            <iframe
+                src="https://player.vimeo.com/video/873270182?h=2838569c43"
+                width="640"
+                style="aspect-ratio: 640/345"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+            <p>Visualizing in the Styles panel</p>
+            <iframe
+                src="https://player.vimeo.com/video/873271271?h=c054894cde"
+                width="640"
+                style="aspect-ratio: 1/1"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+            <p>Visualizing in the Console panel</p>
+            <iframe
+                src="https://player.vimeo.com/video/874515036?h=27be29026b"
+                width="640"
+                style="aspect-ratio: 640/197"
+                frameborder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+            <h2>3/ Development:</h2>
+            <p>
+                This website was a valuable learning experience for me in
+                creating ASCII animations using JavaScript. I divided the
+                animation process into three key parts: position calculation,
+                mapping to an array, and rendering it on the DOM so that it can
+                be displayed into the Element window of the Dev Tool.
+            </p>
+            <p>
+                Thank you Tường Vi Ng for reaching out to me. Work done for Bông
+                Hoa Nhỏ exhibition 2023 by Bắp Xào
+            </p>
+        </main>
         <welcome---to---đo---điện---tâm---đồ---máy>
-            <div
-                title="&#13;About:&#10;&#13;- It pretends that a machine has a passion (like human) and simulates how that passion grows or dies down based on a number of input factors. The visualization is to mimic how ECG (Electrocardiogram) machines display the data, and all of which are viewed inside the developer tools.&#10;&#13;- This work is very much inspired by Everest Pipkin's bodies.html &#40;https://ifyoulived.org/bodies&#41;&#13;"
-            >
-                <strong
-                    >Measure a machine’s heart <br />/ Đo điện tâm đồ
-                    máy</strong
-                >
-                <br />
-                <br />
+            <div>
                 <b>Instruction:</b>
                 RIGHT click on THIS BOX & Select "Inspect" (I recommend browsers
                 with access to Developer-Tools, e.g., Chrome, Microsoft Edge,
                 Firefox,...)
-                <br />
-                <br />
-                (Hover to see About)
             </div>
         </welcome---to---đo---điện---tâm---đồ---máy>
         <remote-control>
@@ -112,7 +196,12 @@
                 show <br />
                 in styles
             </button>
-            <button disabled id="b_24" class="right bot">
+            <button
+                disabled
+                id="b_24"
+                class="right bot"
+                title="please allow camera for this to work"
+            >
                 show <br />
                 eyes
             </button>

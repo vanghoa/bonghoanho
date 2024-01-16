@@ -75,6 +75,7 @@ function windowresize_func(event) {
 
             body {
                 background-image: url('remote.jpg') !important;
+                overflow: hidden;
             }
         }`;
         devtoolopenfirst = false;
@@ -93,6 +94,7 @@ function stop_() {
 
 async function removeprepend(x) {
     if (x) {
+        main.remove();
         for (let i = 0; i < fullhtml.length; i++) {
             if (init_anim) {
                 await wait(50);
@@ -102,6 +104,7 @@ async function removeprepend(x) {
 
         start_.disabled = false;
     } else {
+        body.prepend(main);
         await stop_cam();
         for (let i = fullhtml.length - 1; i >= 0; i--) {
             if (!init_anim) {

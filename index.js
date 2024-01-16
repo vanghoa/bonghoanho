@@ -68,6 +68,7 @@ let slogan, so, numdisplay_init, heart;
     ]
 }
 const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
+const main = $('main');
 const style_ = $$('style');
 const start_ = $('#b_14');
 const reset_ = $('#b_3');
@@ -232,6 +233,9 @@ const eyes_divider_1 = $createcomment(
         return cmt;
     })()
 );
+const eyes_allow_pls = $createcomment(
+    '....... your camera is not working some how... or are you sure you allowed camera permission? .......'
+);
 for (let a = 0; a < cheight; a++) {
     let cmt = $createcomment(
         (() => {
@@ -267,18 +271,16 @@ const eyes_divider_2 = $createcomment(
 const eyeshtml = [eyes_devider, eyes_divider_1, ...eyes, eyes_divider_2];
 const eyeshtml_i = eyeshtml.slice().reverse();
 
-fullhtml = slogan_
-    .concat(
-        sttlog1,
-        numberdisplay_divider_1,
-        numberdisplay,
-        numberdisplay_divider_2,
-        sttlog2,
-        clocks,
-        cmts,
-        divs
-    )
-    .reverse();
+fullhtmledit(
+    sttlog1,
+    numberdisplay_divider_1,
+    numberdisplay,
+    numberdisplay_divider_2,
+    sttlog2,
+    clocks,
+    cmts,
+    divs
+);
 
 //body.prepend(div_welcome);
 
@@ -300,8 +302,8 @@ async function animation(now) {
         render_numberdisplay(template[count]);
         render_comment();
         if (cs_frame) {
-            console.clear();
             if (showcons) {
+                console.clear();
                 render_console();
             }
             cs_frame = false;
@@ -857,21 +859,31 @@ async function init_cam() {
             slogan_[slogan_.length - 1].after(eyeshtml_i[i]);
         }
 
-        fullhtml = slogan_
-            .concat(
-                eyeshtml,
-                sttlog1,
-                numberdisplay_divider_1,
-                numberdisplay,
-                numberdisplay_divider_2,
-                sttlog2,
-                clocks,
-                cmts,
-                divs
-            )
-            .reverse();
+        fullhtmledit(
+            eyeshtml,
+            sttlog1,
+            numberdisplay_divider_1,
+            numberdisplay,
+            numberdisplay_divider_2,
+            sttlog2,
+            clocks,
+            cmts,
+            divs
+        );
     } catch (e) {
         console.log('An error occurred: ' + e);
+        slogan_[slogan_.length - 1].after(eyes_allow_pls);
+        fullhtmledit(
+            eyes_allow_pls,
+            sttlog1,
+            numberdisplay_divider_1,
+            numberdisplay,
+            numberdisplay_divider_2,
+            sttlog2,
+            clocks,
+            cmts,
+            divs
+        );
         stop_cam();
     }
 }
@@ -890,20 +902,22 @@ async function stop_cam() {
             }
             eyeshtml_i[i].remove();
         }
-        fullhtml = slogan_
-            .concat(
-                sttlog1,
-                numberdisplay_divider_1,
-                numberdisplay,
-                numberdisplay_divider_2,
-                sttlog2,
-                clocks,
-                cmts,
-                divs
-            )
-            .reverse();
+        fullhtmledit(
+            sttlog1,
+            numberdisplay_divider_1,
+            numberdisplay,
+            numberdisplay_divider_2,
+            sttlog2,
+            clocks,
+            cmts,
+            divs
+        );
     }
 }
+function fullhtmledit(...rest) {
+    fullhtml = slogan_.concat(...rest).reverse();
+}
+
 function clearphoto() {
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, 0, ewidth, cheight);
