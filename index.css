@@ -14,19 +14,23 @@ body {
 }
 
 body {
-    height: 100vh;
     background-image: none;
     justify-content: unset;
     background-size: 100% 100%;
+    padding: 5px;
 }
 
 main {
-    width: calc(50% + 30px);
+    width: calc(50%);
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: fit-content;
+    background-color: red;
+    border-radius: 35px;
+    background: #ffffff;
+    box-shadow: inset 7px 7px 12px #c3c3c3, inset -7px -7px 12px #fdfdfd;
 }
 
 main img {
@@ -51,11 +55,11 @@ for-mobile {
     max-width: min(300px, calc(50% - 30px));
     background-color: black;
     color: white;
-    font-weight: 100;
+    font-weight: 400;
 }
 
 welcome---to---đo---điện---tâm---đồ---máy div {
-    font-weight: 100;
+    font-weight: 400;
 }
 
 welcome---to---đo---điện---tâm---đồ---máy a {
