@@ -17,6 +17,7 @@ body {
     background-image: none;
     justify-content: unset;
     background-size: 100% 100%;
+    overflow-x: hidden;
 }
 
 main {
@@ -65,6 +66,7 @@ for-mobile {
     font-weight: 400;
     border-radius: 10px;
     background-color: rgb(237, 237, 237);
+    overflow-x: hidden;
     box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
         inset -7px -7px 15px rgb(255, 255, 255);
 }
