@@ -17,7 +17,6 @@ body {
     background-image: none;
     justify-content: unset;
     background-size: 100% 100%;
-    background-color: rgb(1, 208, 255);
 }
 
 main {
@@ -29,7 +28,7 @@ main {
     gap: 20px;
     height: fit-content;
     border-radius: 10px;
-    background-color: rgb(255, 234, 0);
+    background-color: rgb(237, 237, 237);
     box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
         inset -7px -7px 15px rgb(255, 255, 255);
     overflow-x: hidden;
@@ -65,7 +64,7 @@ for-mobile {
     color: black;
     font-weight: 400;
     border-radius: 10px;
-    background-color: rgb(255, 234, 0);
+    background-color: rgb(237, 237, 237);
     box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
         inset -7px -7px 15px rgb(255, 255, 255);
 }
