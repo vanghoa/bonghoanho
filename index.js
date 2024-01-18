@@ -151,7 +151,10 @@ const h_cheight = Math.round(cheight / 2);
 const h_cwidth = Math.round(cwidth / 2);
 const blink_cheight = Math.round(cheight / 3);
 const gradient = '___...--:!/r(l1Z4H9W8$@';
-let videoStream;
+let Stream;
+
+// ears
+let audiodata, analyser;
 
 // setup html
 
@@ -333,6 +336,9 @@ async function animation(now) {
             render_cam(ctx);
             const chars = getPixelsGreyScale(ctx);
             render_eyes(chars);
+            // ears
+            analyser.getByteFrequencyData(audiodata);
+            render_ears(audiodata);
         }
     }
     await wait(delay_);
@@ -844,12 +850,23 @@ function reset() {
 
 async function init_cam() {
     try {
-        videoStream = await navigator.mediaDevices.getUserMedia({
+        Stream = await navigator.mediaDevices.getUserMedia({
             video: true,
-            audio: false,
+            audio: true,
         });
-        video.srcObject = videoStream;
+        video.srcObject = Stream;
         video.play();
+
+        // audio
+        const audioCtx = new (window.AudioContext ||
+            window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 32;
+        const audioSrc = audioCtx.createMediaStreamSource(Stream);
+        audioSrc.connect(analyser);
+        audiodata = new Uint8Array(analyser.frequencyBinCount);
+        console.log('bip');
+
         showeyes = true;
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
@@ -890,9 +907,10 @@ async function init_cam() {
 async function stop_cam() {
     showeyes = false;
     showeyes_.classList.remove('pressed');
-    showeyes_.innerHTML = 'show eyes';
-    if (videoStream) {
-        const tracks = videoStream.getTracks();
+    showeyes_.innerHTML = 'show <br /> &#128065; & &#128066;';
+    document.documentElement.style.margin = '0px';
+    if (Stream) {
+        const tracks = Stream.getTracks();
         tracks.forEach((track) => track.stop());
         video.srcObject = null;
         for (let i = 0; i < eyeshtml_i.length; i++) {
@@ -959,6 +977,15 @@ function isPointInsideEllipse(x, y, center_x, center_y, a, b) {
 
     return result;
 }
+
+const render_ears = (data) => {
+    const avg = data.reduce((sum, num) => sum + num, 0) / data.length;
+    document.documentElement.style.margin = `${Math.round(
+        map(avg, 15, 70, -10, 40)
+    )}px`;
+    //console.log(avg);
+};
+
 const render_eyes = (textDarkScale) => {
     eyes.forEach((eye, i) => {
         eye.nodeValue = (() => {
@@ -1157,7 +1184,9 @@ showcons_.onclick = function () {
 
 showeyes_.onclick = function () {
     this.classList.toggle('pressed');
-    this.innerHTML = !showeyes ? 'see <br /> eyes' : 'show <br /> eyes';
+    this.innerHTML = !showeyes
+        ? 'see <br /> &#128065; & &#128066;'
+        : 'show <br /> &#128065; & &#128066;';
     !showeyes ? init_cam() : stop_cam();
 };
 
