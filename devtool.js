@@ -76,6 +76,8 @@ function windowresize_func(event) {
             body {
                 background-image: url('remote.jpg') !important;
                 overflow: hidden;
+                height: 100vh;
+                padding: 0;
             }
         }`;
         devtoolopenfirst = false;

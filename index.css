@@ -17,28 +17,37 @@ body {
     background-image: none;
     justify-content: unset;
     background-size: 100% 100%;
-    padding: 5px;
+    padding: 20px;
+    background-color: rgb(1, 208, 255);
 }
 
 main {
-    width: calc(50%);
+    width: calc(50% - 15px);
     padding: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     height: fit-content;
-    background-color: red;
-    border-radius: 35px;
-    background: #ffffff;
-    box-shadow: inset 7px 7px 12px #c3c3c3, inset -7px -7px 12px #fdfdfd;
+    border-radius: 10px;
+    background-color: rgb(255, 234, 0);
+    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
+        inset -7px -7px 15px rgb(255, 255, 255);
+    overflow-x: hidden;
 }
 
 main img {
     max-width: 50em;
     width: 100%;
+    border-radius: 10px;
+    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
+        inset -7px -7px 15px rgb(255, 255, 255);
+    position: relative;
 }
 main * {
     max-width: 100%;
+}
+main iframe {
+    width: 100%;
 }
 main p {
     font-weight: 400;
@@ -53,13 +62,25 @@ for-mobile {
     transform: translate(50%, -50%);
     padding: 20px;
     max-width: min(300px, calc(50% - 30px));
-    background-color: black;
-    color: white;
+    color: black;
     font-weight: 400;
+    border-radius: 10px;
+    background-color: rgb(255, 234, 0);
+    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
+        inset -7px -7px 15px rgb(255, 255, 255);
 }
 
 welcome---to---đo---điện---tâm---đồ---máy div {
     font-weight: 400;
+}
+
+welcome---to---đo---điện---tâm---đồ---máy b,
+h1 {
+    font-weight: bolder;
+}
+
+h2 {
+    font-weight: 700;
 }
 
 welcome---to---đo---điện---tâm---đồ---máy a {
@@ -74,7 +95,7 @@ remote-control {
     width: 100%;
     height: 100%;
     grid-template: repeat(9, 1fr) / repeat(3, 1fr);
-    padding: 10%;
+    padding: 5px;
 }
 
 remote-control button {
@@ -151,6 +172,7 @@ remote-control button.bot {
     width: 100%;
     border-radius: 20px;
     background-color: rgb(47, 255, 0);
+    font-weight: 700;
 }
 
 #b_14.pressed {
@@ -159,11 +181,11 @@ remote-control button.bot {
 }
 
 #b_14::after {
-    content: 'START';
+    content: 'Start';
 }
 
 #b_14.pressed::after {
-    content: 'STOP';
+    content: 'Stop';
 }
 
 /*-----------*/
