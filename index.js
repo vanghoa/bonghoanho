@@ -865,7 +865,6 @@ async function init_cam() {
         const audioSrc = audioCtx.createMediaStreamSource(Stream);
         audioSrc.connect(analyser);
         audiodata = new Uint8Array(analyser.frequencyBinCount);
-        console.log('bip');
 
         showeyes = true;
         for (let i = 0; i < eyeshtml_i.length; i++) {
