@@ -981,7 +981,7 @@ function isPointInsideEllipse(x, y, center_x, center_y, a, b) {
 const render_ears = (data) => {
     const avg = data.reduce((sum, num) => sum + num, 0) / data.length;
     document.documentElement.style.margin = `${Math.round(
-        map(avg, 15, 70, -10, 40)
+        map(avg, 15, 50, -8, 40)
     )}px`;
     //console.log(avg);
 };
