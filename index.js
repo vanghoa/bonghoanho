@@ -1172,19 +1172,21 @@ start_.onclick = function () {
 showcss_.onclick = function () {
     this.classList.toggle('pressed');
     showcss = !showcss;
-    this.innerHTML = showcss ? 'see <br /> styles' : 'show <br /> in styles';
+    this.innerHTML = showcss ? 'stop <br /> styles' : 'show <br /> in styles';
 };
 
 showcons_.onclick = function () {
     this.classList.toggle('pressed');
     showcons = !showcons;
-    this.innerHTML = showcons ? 'see <br /> console' : 'show <br /> in console';
+    this.innerHTML = showcons
+        ? 'stop <br /> console'
+        : 'show <br /> in console';
 };
 
 show_eyes_ears_.onclick = function () {
     this.classList.toggle('pressed');
     this.innerHTML = !show_eyes_ears
-        ? 'see <br /> &#128065; & &#128066;'
+        ? 'stop <br /> &#128065; & &#128066;'
         : 'show <br /> &#128065; & &#128066;';
     !show_eyes_ears ? init_cam() : stop_cam();
 };

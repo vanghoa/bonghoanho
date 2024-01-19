@@ -180,6 +180,9 @@ remote-control button.bot {
     font-weight: 700;
 }
 
+#b_22.pressed,
+#b_23.pressed,
+#b_24.pressed,
 #b_14.pressed {
     background-color: rgb(255, 94, 0);
     color: white;
