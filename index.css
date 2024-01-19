@@ -7,6 +7,10 @@
     font-weight: 600;
 }
 
+html {
+    transition: margin 0.5s;
+}
+
 remote-control,
 body {
     display: flex;

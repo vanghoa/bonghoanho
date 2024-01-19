@@ -74,9 +74,9 @@ const start_ = $('#b_14');
 const reset_ = $('#b_3');
 const showcons_ = $('#b_22');
 const showcss_ = $('#b_23');
-const showeyes_ = $('#b_24');
+const show_eyes_ears_ = $('#b_24');
 const allparas = $$('.para');
-const allbuttons = [showcons_, showcss_, showeyes_, ...allparas];
+const allbuttons = [showcons_, showcss_, show_eyes_ears_, ...allparas];
 const sttlog1 = $create('input-log');
 const sttlog2 = $create('input-log');
 const eyes_devider = $create('eye-eye');
@@ -136,7 +136,7 @@ let devtoolopenfirst = true;
 let transready = false;
 let genready = true;
 let showcss,
-    showeyes,
+    show_eyes_ears,
     showcons = false;
 
 // eyes
@@ -321,7 +321,7 @@ async function animation(now) {
     }
     if (!last__ || now - last__ >= 200) {
         last__ = now;
-        if (showeyes) {
+        if (show_eyes_ears) {
             if (isBlinking) {
                 blinkCount++;
                 if (blinkCount > 3) {
@@ -866,10 +866,10 @@ async function init_cam() {
         audioSrc.connect(analyser);
         audiodata = new Uint8Array(analyser.frequencyBinCount);
 
-        showeyes = true;
+        show_eyes_ears = true;
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
-            if (!showeyes) {
+            if (!show_eyes_ears) {
                 return;
             }
             slogan_[slogan_.length - 1].after(eyeshtml_i[i]);
@@ -904,9 +904,9 @@ async function init_cam() {
     }
 }
 async function stop_cam() {
-    showeyes = false;
-    showeyes_.classList.remove('pressed');
-    showeyes_.innerHTML = 'show <br /> &#128065; & &#128066;';
+    show_eyes_ears = false;
+    show_eyes_ears_.classList.remove('pressed');
+    show_eyes_ears_.innerHTML = 'show <br /> &#128065; & &#128066;';
     document.documentElement.style.margin = '0px';
     if (Stream) {
         const tracks = Stream.getTracks();
@@ -914,7 +914,7 @@ async function stop_cam() {
         video.srcObject = null;
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
-            if (showeyes) {
+            if (show_eyes_ears) {
                 return;
             }
             eyeshtml_i[i].remove();
@@ -980,7 +980,7 @@ function isPointInsideEllipse(x, y, center_x, center_y, a, b) {
 const render_ears = (data) => {
     const avg = data.reduce((sum, num) => sum + num, 0) / data.length;
     document.documentElement.style.margin = `${Math.round(
-        map(avg, 15, 50, -8, 40)
+        map(avg, 15, 60, -15, 50)
     )}px`;
     //console.log(avg);
 };
@@ -1164,7 +1164,7 @@ start_.onclick = function () {
     reset_.disabled =
         showcss_.disabled =
         showcons_.disabled =
-        showeyes_.disabled =
+        show_eyes_ears_.disabled =
             stop ? true : false;
     myrequest = stop ? null : requestAnimationFrame(animation);
 };
@@ -1181,12 +1181,12 @@ showcons_.onclick = function () {
     this.innerHTML = showcons ? 'see <br /> console' : 'show <br /> in console';
 };
 
-showeyes_.onclick = function () {
+show_eyes_ears_.onclick = function () {
     this.classList.toggle('pressed');
-    this.innerHTML = !showeyes
+    this.innerHTML = !show_eyes_ears
         ? 'see <br /> &#128065; & &#128066;'
         : 'show <br /> &#128065; & &#128066;';
-    !showeyes ? init_cam() : stop_cam();
+    !show_eyes_ears ? init_cam() : stop_cam();
 };
 
 // passion rate decreate over time
