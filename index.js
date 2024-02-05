@@ -76,10 +76,10 @@ const showcons_ = $('#b_22');
 const showcss_ = $('#b_23');
 const show_eyes_ears_ = $('#b_24');
 const allparas = $$('.para');
+const head = $('head');
 const allbuttons = [showcons_, showcss_, show_eyes_ears_, ...allparas];
 const sttlog1 = $create('input-log');
 const sttlog2 = $create('input-log');
-const eyes_devider = $create('eye-eye');
 const log1 = sttlog1.setAttribute.bind(sttlog1);
 const log2 = sttlog2.setAttribute.bind(sttlog2);
 const log1rmv = sttlog1.removeAttribute.bind(sttlog1);
@@ -239,6 +239,9 @@ const eyes_divider_1 = $createcomment(
 const eyes_allow_pls = $createcomment(
     '....... your camera is not working some how... or are you sure you allowed camera permission? .......'
 );
+const eyes_instruction = $createcomment(
+    '....... open the <head>...</head> tag to view the eyes & ears .......'
+);
 for (let a = 0; a < cheight; a++) {
     let cmt = $createcomment(
         (() => {
@@ -271,8 +274,8 @@ const eyes_divider_2 = $createcomment(
     })()
 );
 
-const eyeshtml = [eyes_devider, eyes_divider_1, ...eyes, eyes_divider_2];
-const eyeshtml_i = eyeshtml.slice().reverse();
+const eyeshtml = [eyes_divider_1, ...eyes, eyes_divider_2];
+const eyeshtml_i = eyeshtml.slice();
 
 fullhtmledit(
     sttlog1,
@@ -336,10 +339,12 @@ async function animation(now) {
             render_cam(ctx);
             const chars = getPixelsGreyScale(ctx);
             render_eyes(chars);
-            // ears
-            analyser.getByteFrequencyData(audiodata);
-            render_ears(audiodata);
         }
+    }
+    if (show_eyes_ears) {
+        // ears
+        analyser.getByteFrequencyData(audiodata);
+        render_ears(audiodata);
     }
     await wait(delay_);
     myrequest = stop ? null : requestAnimationFrame(animation);
@@ -771,7 +776,8 @@ function render_numberdisplay({ upper, below }) {
         content: 'my heart: ${Math.round((tong_ / 1700) * 100)}% ${heart[
               countheart
           ].replaceAll('@', h_wght)}';
-    }`
+    }
+    `
         : '';
 
     for (let a = 1; a < numberdisplay.length - 1; a++) {
@@ -867,15 +873,18 @@ async function init_cam() {
         audiodata = new Uint8Array(analyser.frequencyBinCount);
 
         show_eyes_ears = true;
+        slogan_[slogan_.length - 1].after(eyes_instruction);
+        await wait(5000);
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
             if (!show_eyes_ears) {
                 return;
             }
-            slogan_[slogan_.length - 1].after(eyeshtml_i[i]);
+            head.lastChild.after(eyeshtml_i[i]);
         }
 
         fullhtmledit(
+            eyes_instruction,
             eyeshtml,
             sttlog1,
             numberdisplay_divider_1,
@@ -907,11 +916,12 @@ async function stop_cam() {
     show_eyes_ears = false;
     show_eyes_ears_.classList.remove('pressed');
     show_eyes_ears_.innerHTML = 'show <br /> &#128065; & &#128066;';
-    document.documentElement.style.margin = '0px';
+    style_[2].textContent = '';
     if (Stream) {
         const tracks = Stream.getTracks();
         tracks.forEach((track) => track.stop());
         video.srcObject = null;
+        eyes_instruction.remove();
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
             if (show_eyes_ears) {
@@ -979,9 +989,18 @@ function isPointInsideEllipse(x, y, center_x, center_y, a, b) {
 
 const render_ears = (data) => {
     const avg = data.reduce((sum, num) => sum + num, 0) / data.length;
-    document.documentElement.style.margin = `${Math.round(
-        map(avg, 15, 60, -15, 50)
-    )}px`;
+    let digits = Math.round(map(avg, -10, 180, 1, 8));
+    style_[2].textContent = `
+    html {
+        margin: ${Math.round(map(avg, 15, 60, -15, 50))}px;
+    }
+    head {
+        margin: ${10 ** digit_()}px;
+        padding: ${10 ** digit_()}px;
+    }`;
+    function digit_() {
+        return Math.round(digits + Math.random() * 2 - 1);
+    }
     //console.log(avg);
 };
 
