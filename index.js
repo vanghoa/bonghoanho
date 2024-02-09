@@ -777,10 +777,10 @@ function render_numberdisplay({ upper, below }, url = true) {
             history.replaceState(
                 {},
                 '',
-                `${cmt
+                `I${cmt
                     .replaceAll(` `, '-')
                     .replace(`[`, '.')
-                    .replace(`]`, '.')}`
+                    .replace(`]`, '.')}I`
             );
         return cmt;
     })();
