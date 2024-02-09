@@ -85,6 +85,7 @@ function windowresize_func(event) {
 
 function stop_() {
     start_.disabled = stop = true;
+    reseturl();
     for (let i = 0; i < allbuttons.length; i++) {
         allbuttons[i].disabled = true;
     }

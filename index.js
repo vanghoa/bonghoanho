@@ -18,6 +18,7 @@ const widenit =
     'Widen the Developer-Tools by dragging its edge until a TV remote control shows up';
 const rightclick = $('welcome---to---đo---điện---tâm---đồ---máy').innerHTML;
 const max_height = 100;
+const origin_reverse = location.origin.split('').reverse().join('');
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
 {
@@ -213,6 +214,7 @@ numberdisplay.push($createcomment(numdisplay_init[1]));
 const numberdisplay_divider_1 = $createcomment(numdisplay_init[1]);
 const numberdisplay_divider_2 = $createcomment(numdisplay_init[1]);
 render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } });
+reseturl();
 const eyes_mid = (a) => {
     return a == h_cheight ? '╠═════╣' : '║.....║';
 };
@@ -655,6 +657,10 @@ function dung() {
     stop = true;
 }
 
+function reseturl() {
+    history.replaceState(null, '', location.origin);
+}
+
 function render_first({ upper, below }) {
     divs[0].upper = upper;
     if (transready) {
@@ -768,6 +774,7 @@ function render_numberdisplay({ upper, below }) {
 
         count2 += count2 >= max_height + statelength + 1 ? -count2 : 1;
 
+        history.replaceState({}, '', `${cmt.replaceAll(` `, '-')}`);
         return cmt;
     })();
 
@@ -1186,6 +1193,9 @@ start_.onclick = function () {
         show_eyes_ears_.disabled =
             stop ? true : false;
     myrequest = stop ? null : requestAnimationFrame(animation);
+    if (stop) {
+        reseturl();
+    }
 };
 
 showcss_.onclick = function () {
@@ -1200,6 +1210,9 @@ showcons_.onclick = function () {
     this.innerHTML = showcons
         ? 'stop <br /> console'
         : 'show <br /> in console';
+    if (!showcons) {
+        console.clear();
+    }
 };
 
 show_eyes_ears_.onclick = function () {
