@@ -18,7 +18,7 @@ const widenit =
     'Widen the Developer-Tools by dragging its edge until a TV remote control shows up';
 const rightclick = $('welcome---to---đo---điện---tâm---đồ---máy').innerHTML;
 const max_height = 100;
-const origin_reverse = location.origin.split('').reverse().join('');
+const href = location.href;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
 {
@@ -213,8 +213,7 @@ numberdisplay.unshift($createcomment(numdisplay_init[0]));
 numberdisplay.push($createcomment(numdisplay_init[1]));
 const numberdisplay_divider_1 = $createcomment(numdisplay_init[1]);
 const numberdisplay_divider_2 = $createcomment(numdisplay_init[1]);
-render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } });
-reseturl();
+render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } }, false);
 const eyes_mid = (a) => {
     return a == h_cheight ? '╠═════╣' : '║.....║';
 };
@@ -658,7 +657,7 @@ function dung() {
 }
 
 function reseturl() {
-    history.replaceState(null, '', location.origin);
+    history.replaceState(null, '', href);
 }
 
 function render_first({ upper, below }) {
@@ -683,7 +682,7 @@ function render_comment() {
     }
 }
 
-function render_numberdisplay({ upper, below }) {
+function render_numberdisplay({ upper, below }, url = true) {
     let tong_ = Math.round(map(upper.length + below.length, 3, 30, 0, 1000));
     let tong = tong_ < 0 ? '0' : tong_.toString();
     let tonglength = tong.length;
@@ -774,7 +773,15 @@ function render_numberdisplay({ upper, below }) {
 
         count2 += count2 >= max_height + statelength + 1 ? -count2 : 1;
 
-        history.replaceState({}, '', `${cmt.replaceAll(` `, '-')}`);
+        url &&
+            history.replaceState(
+                {},
+                '',
+                `${cmt
+                    .replaceAll(` `, '-')
+                    .replace(`[`, '.')
+                    .replace(`]`, '.')}`
+            );
         return cmt;
     })();
 
