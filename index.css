@@ -45,18 +45,22 @@ main {
     height: calc(100vh - 20vw);
     border-radius: 10px;
     background-color: rgb(237, 237, 237);
-    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
-        inset -7px -7px 15px rgb(255, 255, 255);
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+main img,
+welcome---to---đo---điện---tâm---đồ---máy,
+for-mobile,
+main {
+    box-shadow: inset 7px 7px 10px rgba(0, 0, 0, 0.17),
+        inset -7px -7px 10px rgb(255, 255, 255);
 }
 
 main img {
     max-width: 50em;
     width: 100%;
     border-radius: 10px;
-    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
-        inset -7px -7px 15px rgb(255, 255, 255);
     position: relative;
 }
 main * {
@@ -81,8 +85,6 @@ for-mobile {
     border-radius: 10px;
     background-color: rgb(237, 237, 237);
     overflow-x: hidden;
-    box-shadow: inset 7px 7px 15px rgba(0, 0, 0, 0.37),
-        inset -7px -7px 15px rgb(255, 255, 255);
 }
 
 h1 {
