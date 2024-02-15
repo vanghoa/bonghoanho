@@ -205,7 +205,7 @@ remote-control button.bot {
 
 #b_10::after {
     left: 0;
-    content: 'fail';
+    content: 'overwork';
     top: -20px;
 }
 
@@ -216,7 +216,7 @@ remote-control button.bot {
 
 #b_12::after {
     right: 0;
-    content: 'poor af';
+    content: 'toxicity';
     top: -20px;
 }
 
@@ -227,7 +227,7 @@ remote-control button.bot {
 
 #b_16::after {
     left: 0;
-    content: 'OT';
+    content: 'loneliness';
     bottom: -20px;
 }
 
@@ -249,7 +249,8 @@ remote-control .b_small {
     height: 13vw;
     border-radius: 20px;
     position: relative;
-    background-color: orange;
+    background-color: black;
+    color: white;
 }
 
 remote-control .b_small::after {

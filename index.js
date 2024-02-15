@@ -328,7 +328,7 @@ async function animation(now) {
         if (show_eyes_ears) {
             if (isBlinking) {
                 blinkCount++;
-                if (blinkCount > 3) {
+                if (blinkCount > 4) {
                     isBlinking = false;
                     blinkCount = 0;
                 }
@@ -1035,7 +1035,7 @@ const render_eyes = (textDarkScale) => {
                     cmt += '`';
                     continue;
                 }
-                if (i < blink_cheight * blinkCount) {
+                if (i < blink_cheight * (blinkCount - 1)) {
                     cmt += '.';
                     continue;
                 }
