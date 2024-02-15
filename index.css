@@ -359,6 +359,7 @@ for-mobile {
     right: 50%;
     top: 50%;
     transform: translate(50%, -50%);
+    max-width: min(300px, calc(50% - 10vw));
 }
 
 eyes {
