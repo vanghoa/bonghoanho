@@ -50,7 +50,7 @@ main {
 }
 
 main img,
-welcome---to---đo---điện---tâm---đồ---máy,
+welcome---to---measure---a---machine---heart,
 for-mobile,
 main {
     box-shadow: inset 7px 7px 10px rgba(0, 0, 0, 0.17),
@@ -72,7 +72,7 @@ main iframe {
 main p {
     max-width: 50em;
 }
-welcome---to---đo---điện---tâm---đồ---máy,
+welcome---to---measure---a---machine---heart,
 for-mobile {
     display: block;
     position: fixed;
@@ -93,7 +93,7 @@ h1 {
     line-height: 1em;
 }
 
-welcome---to---đo---điện---tâm---đồ---máy b {
+welcome---to---measure---a---machine---heart b {
     font-weight: 600;
 }
 
@@ -103,7 +103,7 @@ h2 {
     line-height: 1em;
 }
 
-welcome---to---đo---điện---tâm---đồ---máy a {
+welcome---to---measure---a---machine---heart a {
     color: white;
 }
 
@@ -118,6 +118,12 @@ remote-control {
     padding: 8%;
 }
 
+remote-control * {
+    text-shadow: 0.1em 0 0.2em rgba(255, 255, 255, 0.677),
+        -0.1em 0 0.2em rgba(73, 73, 73, 0.492);
+    color: black;
+}
+
 remote-control button {
     max-width: 60px;
     width: 100%;
@@ -125,7 +131,14 @@ remote-control button {
     border-radius: 30px;
     word-wrap: break-word;
     word-break: break-all;
-    font-size: 1.3vh;
+    font-size: 1.5vh;
+    background: linear-gradient(
+        90deg,
+        rgba(142, 142, 142, 0.3) 0%,
+        rgba(255, 255, 255, 0.45) 51%,
+        rgba(154, 154, 154, 0.3) 100%
+    );
+    background-color: white;
 }
 
 remote-control button:active:not([disabled]) {
@@ -133,7 +146,7 @@ remote-control button:active:not([disabled]) {
 }
 
 remote-control button:disabled {
-    opacity: 50%;
+    opacity: 20%;
 }
 
 remote-control button.left {
@@ -154,21 +167,42 @@ remote-control button.bot {
 
 /*-----------*/
 
+#b_22,
+#b_23,
+#b_24,
+#b_14,
+#b_3 {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.148) 51%,
+        rgba(255, 255, 255, 0) 100%
+    );
+}
 #b_3 {
     background-color: red;
-    color: white;
+    color: rgb(162, 20, 20);
+    font-size: 3em;
+    line-height: 0;
+}
+
+#b_3::after {
+    content: '\21BB\FE0E';
 }
 
 #b_23 {
-    background-color: rgb(255, 72, 225);
+    background-color: rgb(255, 134, 235);
+    color: rgb(57, 16, 50);
 }
 
 #b_24 {
     background-color: rgb(1, 208, 255);
+    color: rgb(0, 62, 76);
 }
 
 #b_22 {
     background-color: rgb(255, 234, 0);
+    color: rgb(71, 65, 0);
 }
 /*-----------*/
 
@@ -182,6 +216,7 @@ remote-control button.bot {
 #b_20,
 #b_21 {
     background-color: blanchedalmond;
+    color: rgb(136, 120, 96);
 }
 
 /*-----------*/
@@ -192,7 +227,9 @@ remote-control button.bot {
     width: 100%;
     border-radius: 20px;
     background-color: rgb(47, 255, 0);
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 2em;
+    line-height: 0;
 }
 
 #b_22.pressed,
@@ -203,12 +240,23 @@ remote-control button.bot {
     color: white;
 }
 
+#b_14::after,
+#b_3::after {
+    filter: blur(1px);
+}
+
 #b_14::after {
-    content: 'Start';
+    content: '\23F5\FE0E';
+    color: rgb(36, 198, 0);
+    text-shadow: -0.2em 0 0.3em rgb(183, 255, 169),
+        0.1em 0 0.2em rgba(96, 96, 96, 0.43);
 }
 
 #b_14.pressed::after {
-    content: 'Stop';
+    content: '\23F8\FE0E';
+    color: rgb(180, 66, 1);
+    text-shadow: -0.05em 0 0.2em rgb(255, 172, 121),
+        0.1em 0 0.2em rgba(73, 73, 73, 0.492);
 }
 
 /*-----------*/
@@ -221,6 +269,7 @@ remote-control button.bot {
 #b_10::after {
     left: 0;
     content: 'overwork';
+    transform: rotate(-4deg);
     top: -20px;
 }
 
@@ -232,6 +281,7 @@ remote-control button.bot {
 #b_12::after {
     right: 0;
     content: 'toxicity';
+    transform: rotate(-20deg);
     top: -20px;
 }
 
@@ -243,6 +293,7 @@ remote-control button.bot {
 #b_16::after {
     left: 0;
     content: 'loneliness';
+    transform: rotate(10deg);
     bottom: -20px;
 }
 
@@ -254,6 +305,7 @@ remote-control button.bot {
 #b_18::after {
     right: 0;
     content: 'peer pressure';
+    transform: rotate(5deg);
     bottom: -20px;
 }
 
@@ -264,6 +316,12 @@ remote-control .b_small {
     height: 13vw;
     border-radius: 20px;
     position: relative;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(255, 255, 255, 0.328) 51%,
+        rgba(0, 0, 0, 0.3) 100%
+    );
     background-color: black;
     color: white;
 }
@@ -274,6 +332,17 @@ remote-control .b_small::after {
     white-space: nowrap;
     color: white;
     opacity: 100%;
+    background-color: rgba(255, 255, 255, 0.328);
+    padding: 0.2em 0.5em;
+}
+
+remote-control .b_small::after,
+remote-control .b_small,
+#b_22.pressed,
+#b_23.pressed,
+#b_24.pressed {
+    text-shadow: -0.1em 0 0.2em rgba(0, 0, 0, 0.467),
+        0.1em 0 0.2em rgba(37, 37, 37, 0.645);
 }
 
 remote-control .b_small[disabled]::after {

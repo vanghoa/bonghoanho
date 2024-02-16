@@ -11,48 +11,50 @@ const body = document.body;
 
 // const
 const TWO_PI = 2 * Math.PI;
-const clock = ['/=====\\', '|.<`>.|', '|.<,>.|', '\\=====/'];
+const clock = ['╔=====╗', '║.<`>.║', '║.<,>.║', '╚=====╝'];
 clock.skt = 7;
 const needvertical = 'The Developer-Tools needs to be vertical!';
 const widenit =
     'Widen the Developer-Tools by dragging its edge until a TV remote control shows up';
-const rightclick = $('welcome---to---đo---điện---tâm---đồ---máy').innerHTML;
+const rightclick = $('welcome---to---measure---a---machine---heart').innerHTML;
 const max_height = 100;
 const href = location.href;
 let slogan, so, numdisplay_init, heart;
 // prettier-ignore
 {
     slogan = [
-        '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
-        '0000.............................................................................................0000',
-        '00..................../)..đo.../).,.điện...........tâm........./).đồ.......máy.....................00',
-        '0..................._(/.___.._(/....._.__....._/_._..___....._(/.___..___..._.......................0',
-        '0..................(_(_(_)..(_(__(__(/_/.(_...(__(_(_//.(_..(_(_(_)...//.(_(_(_(_/_.................0',
-        '00.............................................................................-/..................00',
-        '0000.........................................................................(_/.................0000',
-        '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+        "█████████████████████████████████████████████████████████████████████████████████████████████████████",
+        '█████/¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\\█████',
+        "████/```````````````````measure```````a`````````````machine's`````````````heart`````````````````\\████",
+        '██/```````````````````/)``đo```/)`,`điện```````````tâm`````````/)`đồ```````máy````````````````````\\██',
+        '█|``````````````````_(/`___``_(/`````_`__`````_/_`_``___`````_(/`___``___```_``````````````````````|█',
+        '█|`````````````````(_(_(_)``(_(__(__(/_/`(_```(__(_(_//`(_``(_(_(_)```//`(_(_(_(_/_````````````````|█',
+        '██\\````````````````````````````````````````````````````````````````````````````-/`````````````````/██',
+        '████\\````````````````````````````````````````````````````````````````````````(_/````````````````/████',
+        '█████\\_________________________________________________________________________________________/█████',
+        '█████████████████████████████████████████████████████████████████████████████████████████████████████',
     ];
     slogan.reverse();
 
     so = {
-        0: ['._.', '/.\\', '\\_/'],
-        1: ['..','/|','.|'],
-        2: ['__.','._)','/__'],
-        3: ['__.','__)','__)'],
-        4: ['...','|_|','..|'],
-        5: ['.__','|_.','__)'],
-        6: ['._.','|_.','\\_)'],
-        7: ['.__','../','./.'],
-        8: ['._.','(_)','(_)'],
-        9: ['._.','(_|','._/'],
-        ':': ['.o.','...','.o.']
+        0: ['`_`', '/`\\', '\\_/'],
+        1: ['``','/|','`|'],
+        2: ['__`','`_)','/__'],
+        3: ['__`','__)','__)'],
+        4: ['```','|_|','``|'],
+        5: ['`__','|_`','__)'],
+        6: ['`_`','|_`','\\_)'],
+        7: ['`__','``/','`/`'],
+        8: ['`_`','(_)','(_)'],
+        9: ['`_`','(_|','`_/'],
+        ':': ['`o`','```','`o`']
     }
 
     numdisplay_init = [
-        '..passion.rate.:.......................................................................current.time.:',
-        '.....................................................................................................',
-        '..passion.rate.:.',
-        '.current.time.:'
+        '``passion`status`:```````````````````````````````````````````````````````````````````````current`time`:',
+        '`````````````````````````````````````````````````````````````````````````````````````````````````````',
+        '``passion`status`:`',
+        '`current`time`:'
     ]
 
     heart = [
@@ -68,7 +70,7 @@ let slogan, so, numdisplay_init, heart;
 `. .............................. ......:=++++-....-=++++-...... ....+%@@@@@@@@*+@@@@@@@@@*:... ...%@@@@@%%@@@@@@@@@@@@@@@@:.. ..=@@@@*....#@@@@@@@@@@@@@@#.. ..+@@@@:....-@@@@@@@@@@@@@@%.. ..:@@@@@+--+@@@@@@@@@@@@@@@=.. ...-@@@@@@@@@@@@@@@@@@@@@@*... ....:%@@@@@@@@@@@@@@@@@@@=.... ......=%@@@@@@@@@@@@@@@+...... ........-*@@@@@@@@@@#=........ ...........=*@@@@#+:.......... ..............:-.............. `
     ]
 }
-const div_welcome = $('welcome---to---đo---điện---tâm---đồ---máy');
+const div_welcome = $('welcome---to---measure---a---machine---heart');
 const main = $('main');
 const style_ = $$('style');
 const start_ = $('#b_14');
@@ -79,8 +81,8 @@ const show_eyes_ears_ = $('#b_24');
 const allparas = $$('.para');
 const head = $('head');
 const allbuttons = [showcons_, showcss_, show_eyes_ears_, ...allparas];
-const sttlog1 = $create('input-log');
-const sttlog2 = $create('input-log');
+const sttlog1 = $create('what-i-have-done');
+const sttlog2 = $create('what-i-have-failed-to-do');
 const log1 = sttlog1.setAttribute.bind(sttlog1);
 const log2 = sttlog2.setAttribute.bind(sttlog2);
 const log1rmv = sttlog1.removeAttribute.bind(sttlog1);
@@ -151,7 +153,8 @@ const ewidth = cwidth + ewidth_diff + 2;
 const h_cheight = Math.round(cheight / 2);
 const h_cwidth = Math.round(cwidth / 2);
 const blink_cheight = Math.round(cheight / 3);
-const gradient = '___...--:!/r(l1Z4H9W8$@';
+let gradient = '``__...--:!/r(l1Z4HW@▒█';
+const eye_skin = '░';
 let Stream;
 
 // ears
@@ -179,13 +182,13 @@ for (let i = 0; i <= 59; i++) {
                 let cmt = '';
                 for (let i = 0; i <= max_height; i++) {
                     if (i == 5) {
-                        cmt += '0';
+                        cmt += '|';
                     } else if (i == 16) {
-                        cmt += 'B';
+                        cmt += '|';
                     } else if (i == x4) {
-                        cmt += 'K';
+                        cmt += '/';
                     } else {
-                        cmt += '.';
+                        cmt += '`';
                     }
                 }
                 return cmt;
@@ -215,25 +218,25 @@ const numberdisplay_divider_1 = $createcomment(numdisplay_init[1]);
 const numberdisplay_divider_2 = $createcomment(numdisplay_init[1]);
 render_numberdisplay({ upper: { length: 0 }, below: { length: 0 } }, false);
 const eyes_mid = (a) => {
-    return a == h_cheight ? '╠═════╣' : '║.....║';
+    return a == h_cheight ? '╠═════╣' : '║░░░░░║';
 };
 const eyes_left = (a) => {
-    return a == h_cheight ? '╔═════╣' : '......║';
+    return a == h_cheight ? '╔═════╣' : '░░░░░░║';
 };
 const eyes_right = (a) => {
-    return a == h_cheight ? '╠═════╗' : '║......';
+    return a == h_cheight ? '╠═════╗' : '║░░░░░░';
 };
 const eyes_divider_1 = $createcomment(
     (() => {
-        let cmt = '......╔';
+        let cmt = '░░░░░░╔';
         for (let i = 0; i < cwidth; i++) {
             cmt += '═';
         }
-        cmt += '╗.....╔';
+        cmt += '╗░░░░░╔';
         for (let i = 0; i < cwidth; i++) {
             cmt += '═';
         }
-        cmt += '╗......';
+        cmt += '╗░░░░░░';
         return cmt;
     })()
 );
@@ -262,15 +265,15 @@ for (let a = 0; a < cheight; a++) {
 }
 const eyes_divider_2 = $createcomment(
     (() => {
-        let cmt = '......╚';
+        let cmt = '░░░░░░╚';
         for (let i = 0; i < cwidth; i++) {
             cmt += '═';
         }
-        cmt += '╝.....╚';
+        cmt += '╝░░░░░╚';
         for (let i = 0; i < cwidth; i++) {
             cmt += '═';
         }
-        cmt += '╝......';
+        cmt += '╝░░░░░░';
         return cmt;
     })()
 );
@@ -577,6 +580,12 @@ function template_cmt_generate() {
             10
         );
 
+        let prev_x = 0,
+            prev_x2 = 0,
+            prev_x_ = 0,
+            prev_x1 = 0,
+            prev_x4 = 100000;
+
         for (let y = 0; y <= cmts.length - 1; y++) {
             let tempcmt = '';
             let x =
@@ -592,22 +601,36 @@ function template_cmt_generate() {
             let x_ = i % 2 == 0 ? 5 : Math.round((y - c_) / m_);
             for (let w = 0; w <= max_height; w++) {
                 if (w == x2) {
-                    tempcmt += 'B';
+                    tempcmt += orientation(x2, prev_x2);
                 } else if (w == x_) {
-                    tempcmt += '0';
+                    tempcmt += orientation(x_, prev_x_);
                 } else if (w == x1) {
-                    tempcmt += 'I';
+                    tempcmt += orientation(x1, prev_x1);
                 } else if (w == x) {
-                    tempcmt += 'P';
+                    tempcmt += orientation(x, prev_x);
                 } else if (w == x4) {
-                    tempcmt += 'K';
+                    tempcmt += orientation(x4, prev_x4);
                 } else if (bub_arr[i][y][w]) {
-                    tempcmt += '@';
+                    tempcmt += '█';
                 } else {
-                    tempcmt += '.';
+                    tempcmt += '`';
+                }
+
+                function orientation(cur, prev) {
+                    if (prev < cur) {
+                        return '\\';
+                    } else if (prev > cur) {
+                        return '/';
+                    }
+                    return '|';
                 }
             }
             temp.push(tempcmt);
+            prev_x = x;
+            prev_x2 = x2;
+            prev_x_ = x_;
+            prev_x1 = x1;
+            prev_x4 = x4;
         }
         template_cmt.push(temp);
     }
@@ -617,7 +640,7 @@ function clock_generate() {
     for (let a = 0; a < clocks.length; a++) {
         let cmt = '';
         for (let i = 0; i < 2; i++) {
-            cmt += '.';
+            cmt += '`';
         }
         cmt += clock[a];
         for (
@@ -627,10 +650,10 @@ function clock_generate() {
         ) {
             if (a == 1) {
                 cmt += i % 2 == 0 ? '>' : 'o';
-            } else if (a == 2) {
-                cmt += i % 2 == 0 ? 'A' : '.';
+            } else if (a == 3) {
+                cmt += i % 2 == 0 ? 'A' : '`';
             } else {
-                cmt += '.';
+                cmt += '`';
             }
         }
         cmt += clock[a];
@@ -641,10 +664,10 @@ function clock_generate() {
         ) {
             if (a == 1) {
                 cmt += i % 2 == 0 ? '>' : 'o';
-            } else if (a == 2) {
-                cmt += i % 2 == 0 ? 'A' : '.';
+            } else if (a == 3) {
+                cmt += i % 2 == 0 ? 'A' : '`';
             } else {
-                cmt += '.';
+                cmt += '`';
             }
         }
         cmt += clock[a];
@@ -686,7 +709,7 @@ function render_numberdisplay({ upper, below }, url = true) {
     let tong_ = Math.round(map(upper.length + below.length, 3, 30, 0, 1000));
     let tong = tong_ < 0 ? '0' : tong_.toString();
     let tonglength = tong.length;
-    let h_wght = '.';
+    let h_wght = '`';
 
     if (datecheck) {
         currentdate = new Date().toLocaleTimeString().split(' ')[0];
@@ -707,33 +730,43 @@ function render_numberdisplay({ upper, below }, url = true) {
             let state;
             if (tong_ < 20) {
                 state = '*my passion dies*';
+                gradient = '``__...-';
             } else if (tong_ < 80) {
                 state = 'alert!!! critical!!!';
                 h_wght = '"';
+                gradient = '``__...--:!';
             } else if (tong_ < 300) {
                 state = 'concerned!';
                 h_wght = '-';
+                gradient = '``__...--:!/r(';
             } else if (tong_ < 800) {
                 state = 'not great not terrible';
                 h_wght = '~';
+                gradient = '``__...--:!/r(l1Z';
             } else if (tong_ < 1300) {
                 state = 'stable (means good)';
                 h_wght = '!';
+                gradient = '``__...--:!/r(l1Z4HW';
             } else if (tong_ < 1700) {
                 state = `flourished and healthy!`;
                 h_wght = '+';
+                gradient = '``__...--:!/r(l1Z4HW@▒█';
             } else if (tong_ < 2000) {
                 state = `a bit devoted but I'll allow`;
                 h_wght = '?';
+                gradient = '_...--:!/r(l1Z4HW@▒█';
             } else if (tong_ < 2500) {
                 state = `this is out of hand`;
                 h_wght = '$';
+                gradient = '--:!/r(l1Z4HW@▒█';
             } else if (tong_ < 3000) {
                 state = `too radical already!`;
                 h_wght = '&';
+                gradient = ':!/r(l1Z4HW@▒█';
             } else {
                 state = '*extreme comfort zone*';
                 h_wght = '@';
+                gradient = '(l1Z4HW@▒█';
             }
             let amax =
                 max_height -
@@ -741,7 +774,7 @@ function render_numberdisplay({ upper, below }, url = true) {
                 numdisplay_init[3].length -
                 state.length;
             for (let a = 0; a <= amax; a++) {
-                state += '.';
+                state += '`';
             }
             state += numdisplay_init[3];
             return state;
@@ -779,6 +812,7 @@ function render_numberdisplay({ upper, below }, url = true) {
                 '',
                 `I${cmt
                     .replaceAll(` `, '-')
+                    .replaceAll('`', '.')
                     .replace(`[`, '.')
                     .replace(`]`, '.')}I`
             );
@@ -786,7 +820,7 @@ function render_numberdisplay({ upper, below }, url = true) {
     })();
 
     style_[1].textContent = showcss
-        ? `body, * {
+        ? `body, *:not(br) {
         content: 'my heart: ${Math.round((tong_ / 1700) * 100)}% ${heart[
               countheart
           ].replaceAll('@', h_wght)}';
@@ -806,7 +840,7 @@ function render_numberdisplay({ upper, below }, url = true) {
         }
         let bmax = max_height - cmt.length - cmt2.length;
         for (let b = 0; b <= bmax; b++) {
-            cmt += '.';
+            cmt += '`';
         }
 
         numberdisplay[a].nodeValue = cmt + cmt2;
@@ -843,15 +877,15 @@ function reset() {
         para_funcs.sleep_ =
         para_funcs.ent_ =
         para_funcs.shit_ =
-        para_funcs.sex_ =
+        para_funcs.love_ =
         para_funcs.exerc_ =
-        para_funcs.fail_ =
-        para_funcs.poor_ =
+        para_funcs.overwork_ =
+        para_funcs.toxicity_ =
         para_funcs.learn_ =
         para_funcs.unlearn_ =
         para_funcs.relearn_ =
         para_funcs.prac_ =
-        para_funcs.OT_ =
+        para_funcs.lone_ =
         para_funcs.peer_ =
         para_funcs.finance_ =
         para_funcs.fren_ =
@@ -888,7 +922,10 @@ async function init_cam() {
 
         show_eyes_ears = true;
         slogan_[slogan_.length - 1].after(eyes_instruction);
-        await wait(5000);
+        alert(
+            `Open <head>...</head> tag to see, the clarity of the eyes depends on the current graph status, so keep clicking`
+        );
+        await wait(4000);
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
             if (!show_eyes_ears) {
@@ -1008,7 +1045,7 @@ const render_ears = (data) => {
     html {
         margin: ${Math.round(map(avg, 15, 60, -15, 50))}px;
     }
-    head {
+    head,style {
         margin: ${10 ** digit_()}px;
         padding: ${10 ** digit_()}px;
     }`;
@@ -1032,11 +1069,11 @@ const render_eyes = (textDarkScale) => {
                     h_cheight + 0.2
                 );
                 if (ellipse_check > 1) {
-                    cmt += '`';
+                    cmt += eye_skin;
                     continue;
                 }
                 if (i < blink_cheight * (blinkCount - 1)) {
-                    cmt += '.';
+                    cmt += eye_skin;
                     continue;
                 }
                 cmt += getCharByScale(textDarkScale[i][k]);
@@ -1052,11 +1089,11 @@ const render_eyes = (textDarkScale) => {
                     h_cheight + 0.2
                 );
                 if (ellipse_check > 1) {
-                    cmt += '`';
+                    cmt += eye_skin;
                     continue;
                 }
                 if (i < blink_cheight * blinkCount) {
-                    cmt += '.';
+                    cmt += eye_skin;
                     continue;
                 }
                 cmt += getCharByScale(textDarkScale[i][k]);
@@ -1074,114 +1111,117 @@ const para_funcs = {
     sleep_: 0,
     ent_: 0,
     shit_: 0,
-    sex_: 0,
+    love_: 0,
     exerc_: 0,
-    fail_: 0,
-    poor_: 0,
+    overwork_: 0,
+    toxicity_: 0,
     learn_: 0,
     unlearn_: 0,
     relearn_: 0,
     prac_: 0,
-    OT_: 0,
+    lone_: 0,
     peer_: 0,
     finance_: 0,
     fren_: 0,
     fam_: 0,
     eat() {
-        length += 2;
-        sharpness += 5;
-        log1('Eat', `x${++this.eat_}`);
+        length += 4;
+        sharpness += 10;
+        log1('well_fed', `x${++this.eat_}`);
     },
     sleep() {
-        height += 3;
-        gap_ -= 3;
-        sharpness -= 2;
-        log1('Sleep', `x${++this.sleep_}`);
+        height += 6;
+        gap_ -= 2;
+        sharpness -= 4;
+        log1('enough_sleep', `x${++this.sleep_}`);
     },
     ent() {
-        gap_ += 2;
-        elevation += 2;
-        sharpness -= 5;
-        log1('Entertainment', `x${++this.ent_}`);
+        gap_ += 1;
+        elevation += 4;
+        sharpness -= 8;
+        log1('I_play', `x${++this.ent_}`);
     },
     shit() {
-        gap_ += 3;
-        length += 2;
+        gap_ += 2;
+        length += 4;
         sharpness -= 5;
-        log1('Go_shit', `x${++this.shit_}`);
+        log1('I_shit', `x${++this.shit_}`);
     },
-    sex() {
-        height += 8;
-        length += 5;
-        gap_ += 3;
-        log1('Have_sex', `x${++this.sex_}`);
+    love() {
+        height += 5;
+        length += 8;
+        gap_ -= 2;
+        log1('I_am_loved', `x${++this.love_}`);
     },
     exerc() {
-        elevation += 1;
-        sharpness += 3;
-        log1('Physical_exercise', `x${++this.exerc_}`);
+        elevation += 4;
+        sharpness += 9;
+        log1('routine_exercise', `x${++this.exerc_}`);
     },
-    fail() {
-        length -= 3;
-        height -= 2;
-        gap_ -= 3;
-        log2('Fail', `x${++this.fail_}`);
-    },
-    poor() {
-        length -= 2;
-        elevation -= 3;
-        gap_ -= 7;
-        log2('Poverty', `x${++this.poor_}`);
-    },
-    learn() {
-        length += 8;
-        gap_ -= 5;
-        log1('Learn', `x${++this.learn_}`);
-    },
-    unlearn() {
-        length -= 8;
-        height += 7;
-        gap_ += 2;
-        log1('Unlearn', `x${++this.unlearn_}`);
-    },
-    relearn() {
-        length += 5;
-        elevation += 3;
-        log1('Relearn', `x${++this.relearn_}`);
-    },
-    prac() {
-        height += 4;
-        elevation += 2;
-        log1('Repeated_practice', `x${++this.prac_}`);
-    },
-    OT() {
+    overwork() {
         length -= 7;
         height -= 5;
-        gap_ -= 6;
-        log2('OT', `x${++this.OT_}`);
+        gap_ += 3;
+        log2('too_much_work', `x${++this.overwork_}`);
+    },
+    toxic() {
+        length -= 4;
+        elevation -= 6;
+        gap_ += 12;
+        log2('toxic_things', `x${++this.toxicity_}`);
+    },
+    learn() {
+        length += 14;
+        gap_ -= 10;
+        log1('I_learn', `x${++this.learn_}`);
+    },
+    unlearn() {
+        length -= 15;
+        height += 8;
+        gap_ += 1;
+        log1('I_unlearn', `x${++this.unlearn_}`);
+    },
+    relearn() {
+        length += 10;
+        elevation += 4;
+        log1('I_relearn', `x${++this.relearn_}`);
+    },
+    prac() {
+        height += 7;
+        elevation += 4;
+        log1('I_consistent', `x${++this.prac_}`);
+    },
+    lone() {
+        length -= 14;
+        height -= 6;
+        gap_ -= 5;
+        log2('Im_on_my_own', `x${++this.lone_}`);
     },
     peer() {
-        length -= 8;
+        length -= 16;
         gap_ -= 5;
-        elevation -= 3;
-        log2('Peer_pressure', `x${++this.peer_}`);
+        elevation -= 9;
+        log2('peer_pressure', `x${++this.peer_}`);
     },
     finance() {
-        gapicon_ = '$maker';
+        gapicon_ = '$#$#$';
         eleicon = '$$';
-        gap_ -= 3;
-        log1('Finance', `x${++this.finance_}`);
+        elevation += 3;
+        gap_ -= 5;
+        log1('afford_to_consume', `x${++this.finance_}`);
     },
     fren() {
         gapicon_ = '@<@';
         eleicon = '#*';
-        log1('Friends', `x${++this.fren_}`);
+        elevation += 5;
+        log1('great_friends', `x${++this.fren_}`);
     },
     fam() {
         gapicon_ = '<3';
         eleicon = '()';
-        gap_ -= 3;
-        log1('Family', `x${++this.fam_}`);
+        elevation += 2;
+        gap_ -= 5;
+        log1('intimate_family', `x${++this.fam_}`);
     },
 };
 for (let i = 0; i < allparas.length; i++) {
@@ -1208,7 +1248,9 @@ start_.onclick = function () {
 showcss_.onclick = function () {
     this.classList.toggle('pressed');
     showcss = !showcss;
-    this.innerHTML = showcss ? 'stop <br /> styles' : 'show <br /> in styles';
+    this.innerHTML = showcss
+        ? 'stop <br /> styles'
+        : 'show <br /> in css <br/> styles';
 };
 
 showcons_.onclick = function () {
@@ -1216,7 +1258,7 @@ showcons_.onclick = function () {
     showcons = !showcons;
     this.innerHTML = showcons
         ? 'stop <br /> console'
-        : 'show <br /> in console';
+        : 'show <br /> in <br /> console';
     if (!showcons) {
         console.clear();
     }
@@ -1233,11 +1275,11 @@ show_eyes_ears_.onclick = function () {
 // passion rate decreate over time
 setInterval(function () {
     if (!stop) {
-        height -= 6;
-        length -= 3;
+        height -= 8;
+        length -= 2;
         //sharpness -= 5;
-        elevation -= 2;
-        gap_ -= 5;
+        elevation -= 3;
+        gap_ -= 8;
         checkthu();
         template_generate();
     }
@@ -1262,6 +1304,7 @@ function checkthu() {
     sharpness = check_(sharpness);
     elevation = check_(elevation);
     elevation = elevation > 38 ? 38 : elevation;
+    gap_ = gap_ > 15 ? 15 : gap_;
     gap_ = check_(gap_);
     highestheight = height * 1.5;
     //

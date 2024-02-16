@@ -65,7 +65,7 @@ function windowresize_func(event) {
     window.removeEventListener('resize', windowresize_func);
     setTimeout(() => {
         style_[0].textContent = `@media (max-aspect-ratio: 310/950) {
-            welcome---to---đo---điện---tâm---đồ---máy, main {
+            welcome---to---measure---a---machine---heart, main {
                 display: none !important;
             }
 
@@ -103,8 +103,19 @@ async function removeprepend(x) {
                 body.prepend(fullhtml[i]);
             }
         }
-
         start_.disabled = false;
+        alert(`- click \u23F5\uFE0E to start
+
+- click all the buttons as MANY times as you wish 
+        + the goal is to keep the graph stable (there is a status bar)
+        + the graph will automatically deteriorate over time
+        + the red \u21BB\uFE0E is to reset the graph
+
+- the 3 bottom buttons show various view modes
+
+- if you want to reload the page, please pause the graph first so the url back to normal state
+
+Thank you and have fun :)`);
     } else {
         body.prepend(main);
         await stop_cam();
