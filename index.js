@@ -923,7 +923,11 @@ async function init_cam() {
         show_eyes_ears = true;
         slogan_[slogan_.length - 1].after(eyes_instruction);
         alert(
-            `Open <head>...</head> tag to see, the clarity of the eyes depends on the current graph status, so keep clicking`
+            `- eyes & ears are often put in the <head>...</head> right?
+            
+- the eyes clarity depends on the current graph status, so keep clicking!
+
+- ears are on 2 sides of the head? which is why the TV Remote on the left and the Box Model (under Computed panel) on the right are reactive to sound!`
         );
         await wait(4000);
         for (let i = 0; i < eyeshtml_i.length; i++) {

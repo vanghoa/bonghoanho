@@ -113,9 +113,9 @@ async function removeprepend(x) {
 
 - the 3 bottom buttons show various view modes
 
-- if you want to reload the page, please pause the graph first so the url back to normal state
+- if you want to reload the page, please pause the graph first for the url to go back to normal state
 
-Thank you and have fun :)`);
+thank you and have fun :)`);
     } else {
         body.prepend(main);
         await stop_cam();
