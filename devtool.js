@@ -11,17 +11,16 @@ devtoolschange_func({ detail: devtools });
 
 // Get notified when it's opened/closed or orientation changes
 if (matchMedia('(hover: none) and (pointer: coarse)').matches) {
-    alert(`because you are on mobile, it's a little trickier to carry this out (don't worry, I got ya :)
+    alert(`on mobile, it's a little trickier :)
 
-if you are on IOS users:
+for IOS (prerequisites: a Mac machine & a USB cable):
 - frist, make sure you are opening this site on Safari!
-- find a Mac (either laptop or desktop) & open Safari on that Mac
-- find a cable to connect your IOS device to the Mac
-- after connecting successful, go to the 'Develop' tab on Safari of the Mac
-- look for your IOS device, & select it
-- it will slide down a list of tabs currently opened on Safari of that device, select this tab
+- connect IOS device to Mac with the USB cable
+- on IOS: 'Settings' -> 'Safari' -> 'Advanced' -> toggle 'Javascript' & 'Web Inspector'
+- on Mac: 
+        + open Safari, then in the top menu bar, 'Safari' -> 'Settings' -> 'Advanced' -> 'Show features for web developers', it will show up a 'Develop' on the menu bar
+        + go to that 'Develop' menu, select your IOS device and this website
 - voila, the devtool window will pop up!
-- you can continue now :)
 
 for Android users, I'm not sure how to carry this out :(, if anyone figures it out, please let me know`);
     isDesktop = false;

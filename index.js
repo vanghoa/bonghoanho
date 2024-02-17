@@ -932,14 +932,17 @@ async function init_cam() {
 
         show_eyes_ears = true;
         slogan_[slogan_.length - 1].after(eyes_instruction);
-        isDesktop &&
-            alert(
-                `- eyes & ears are often put in the <head>...</head> right?
+        alert(
+            `- eyes & ears are often put in the <head>...</head> right?
             
 - the eyes clarity depends on the current graph status, so keep clicking!
 
-- ears are on 2 sides of the head? which is why the TV Remote on the left and the Box Model (under Computed panel) on the right are reactive to sound!`
-            );
+${
+    isDesktop
+        ? `- ears are on 2 sides of the head? which is why the TV Remote on the left and the Box Model (under Computed panel) on the right are reactive to sound!`
+        : `- the TV Remote and the Box Model (under Computed panel) on the right are reactive to sound!`
+}`
+        );
         await wait(4000);
         for (let i = 0; i < eyeshtml_i.length; i++) {
             await wait(50);
@@ -1057,8 +1060,13 @@ const render_ears = (data) => {
     const avg = data.reduce((sum, num) => sum + num, 0) / data.length;
     let digits = Math.round(map(avg, -10, 180, 1, 8));
     style_[2].textContent = `
-    html {
-        margin: ${Math.round(map(avg, 15, 60, -15, 50))}px;
+    ${
+        isDesktop
+            ? `html {
+        margin`
+            : `body { 
+        padding`
+    } : ${Math.round(map(avg, 15, 60, -15, 50))}px;
     }
     head,style {
         margin: ${10 ** digit_()}px;

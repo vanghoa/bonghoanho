@@ -422,6 +422,11 @@ eyes {
 @media (hover: none) and (pointer: coarse) {
     body {
         touch-action: pan-x pan-y;
+        --vw: calc(1vh * 320 / 950);
+        width: calc(var(--vw) * 100);
+        overflow: hidden;
+        margin: 0 auto;
+        transition: padding 0.5s;
     }
 
     welcome---to---measure---a---machine---heart,
@@ -430,17 +435,10 @@ eyes {
     }
 
     remote-control {
-        --vw: calc(1vh * 310 / 950);
         display: grid !important;
         background-image: url('remote.jpg') !important;
         background-size: 100% 100%;
         height: 100svh;
-        width: calc(var(--vw) * 100);
-        margin: 0 auto;
         padding: calc(var(--vw) * 8);
-    }
-
-    body {
-        overflow: hidden;
     }
 }
