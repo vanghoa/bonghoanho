@@ -24,10 +24,10 @@ if you are on IOS users:
 - you can continue now :)
 
 for Android users, I'm not sure how to carry this out :(, if anyone figures it out, please let me know`);
+    isDesktop = false;
     devtoolopenfirst = false;
     replace_state_allow = false;
     removeprepend(true);
-    console.log('bip');
 } else {
     addEventListener('devtoolschange', devtoolschange_func);
     onresize = _.debounce(function () {
