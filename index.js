@@ -160,6 +160,9 @@ let Stream;
 // ears
 let audiodata, analyser;
 
+// url
+let replace_state_allow = true;
+
 // setup html
 
 for (let i = 0; i <= 59; i++) {
@@ -680,7 +683,7 @@ function dung() {
 }
 
 function reseturl() {
-    history.replaceState(null, '', href);
+    replace_state_allow && history.replaceState(null, '', href);
 }
 
 function render_first({ upper, below }) {
@@ -805,17 +808,21 @@ function render_numberdisplay({ upper, below }, url = true) {
         }
 
         count2 += count2 >= max_height + statelength + 1 ? -count2 : 1;
-
-        url &&
-            history.replaceState(
-                {},
-                '',
-                `I${cmt
-                    .replaceAll(` `, '-')
-                    .replaceAll('`', '.')
-                    .replace(`[`, '.')
-                    .replace(`]`, '.')}I`
-            );
+        try {
+            url &&
+                replace_state_allow &&
+                history.replaceState(
+                    {},
+                    '',
+                    `I${cmt
+                        .replaceAll(` `, '-')
+                        .replaceAll('`', '.')
+                        .replace(`[`, '.')
+                        .replace(`]`, '.')}I`
+                );
+        } catch (e) {
+            replace_state_allow = false;
+        }
         return cmt;
     })();
 

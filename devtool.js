@@ -10,36 +10,50 @@ devtoolschange_func({ detail: devtools });
 //console.log('DevTools orientation:', devtools.orientation);
 
 // Get notified when it's opened/closed or orientation changes
-window.addEventListener('devtoolschange', devtoolschange_func);
-window.onresize = _.debounce(function () {
-    if (!devtools.isOpen || devtoolopenfirst) {
-        init_anim = false;
-        return;
-    }
-    if (matchMedia('(max-aspect-ratio: 310/950)').matches) {
-        if (div_welcome.innerHTML == '') {
-            init_anim = true;
+if (matchMedia('(hover: none) and (pointer: coarse)').matches) {
+    alert(`because you are on mobile, it's a little trickier to carry this out (don't worry, I got ya :)
+
+if you are on IOS users:
+- frist, make sure you are opening this site on Safari!
+- find a Mac (either laptop or desktop) & open Safari on that Mac
+- find a cable to connect your IOS device to the Mac
+- after connecting successful, go to the 'Develop' tab on Safari of the Mac
+- look for your IOS device, & select it
+- it will slide down a list of tabs currently opened on Safari of that device, select this tab
+- voila, the devtool window will pop up!
+- you can continue now :)
+
+for Android users, I'm not sure how to carry this out :(, if anyone figures it out, please let me know`);
+    devtoolopenfirst = false;
+    replace_state_allow = false;
+    removeprepend(true);
+    console.log('bip');
+} else {
+    addEventListener('devtoolschange', devtoolschange_func);
+    onresize = _.debounce(function () {
+        if (!devtools.isOpen || devtoolopenfirst) {
+            init_anim = false;
             return;
         }
-        div_welcome.innerHTML = '';
-        init_anim = true; //
-        removeprepend(true);
-    } else {
-        init_anim = false;
-        stop_();
-        if (devtools.orientation == 'horizontal') {
-            if (div_welcome.innerHTML == needvertical) {
-                return;
-            }
-            div_welcome.innerHTML = needvertical;
-        } else if (div_welcome.innerHTML == widenit) {
-            return;
+        if (matchMedia('(max-aspect-ratio: 310/950)').matches) {
+            removeprepend(true);
         } else {
-            div_welcome.innerHTML = widenit;
-        } //
-        removeprepend(false);
-    }
-}, 1000);
+            init_anim = false;
+            stop_();
+            if (devtools.orientation == 'horizontal') {
+                if (div_welcome.innerHTML == needvertical) {
+                    return;
+                }
+                div_welcome.innerHTML = needvertical;
+            } else if (div_welcome.innerHTML == widenit) {
+                return;
+            } else {
+                div_welcome.innerHTML = widenit;
+            } //
+            removeprepend(false);
+        }
+    }, 1000);
+}
 
 function devtoolschange_func({ detail: { isOpen, orientation } }) {
     //console.log('Is DevTools open:', event.detail.isOpen);
@@ -96,6 +110,12 @@ function stop_() {
 
 async function removeprepend(x) {
     if (x) {
+        if (div_welcome.innerHTML == '') {
+            init_anim = true;
+            return;
+        }
+        div_welcome.innerHTML = '';
+        init_anim = true; //
         main.remove();
         for (let i = 0; i < fullhtml.length; i++) {
             if (init_anim) {
@@ -104,7 +124,8 @@ async function removeprepend(x) {
             }
         }
         start_.disabled = false;
-        alert(`- click \u23F5\uFE0E to start
+        init_anim &&
+            alert(`- click \u23F5\uFE0E to start
 
 - click all the buttons as MANY times as you wish 
         + the goal is to keep the graph stable (there is a status bar)

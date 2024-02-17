@@ -1,3 +1,7 @@
+:root {
+    --vw: 1vw;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -51,7 +55,6 @@ main {
 
 main img,
 welcome---to---measure---a---machine---heart,
-for-mobile,
 main {
     box-shadow: inset 7px 7px 10px rgba(0, 0, 0, 0.17),
         inset -7px -7px 10px rgb(255, 255, 255);
@@ -72,8 +75,7 @@ main iframe {
 main p {
     max-width: 50em;
 }
-welcome---to---measure---a---machine---heart,
-for-mobile {
+welcome---to---measure---a---machine---heart {
     display: block;
     position: fixed;
     right: 25%;
@@ -115,7 +117,7 @@ remote-control {
     width: 100%;
     height: 100%;
     grid-template: repeat(9, 1fr) / repeat(3, 1fr);
-    padding: 8%;
+    padding: calc(8 * var(--vw));
 }
 
 remote-control * {
@@ -128,10 +130,12 @@ remote-control button {
     max-width: 60px;
     width: 100%;
     height: 8vh;
+    height: 8svh;
     border-radius: 30px;
     word-wrap: break-word;
     word-break: break-all;
     font-size: 1.5vh;
+    font-size: 1.5svh;
     background: linear-gradient(
         90deg,
         rgba(142, 142, 142, 0.3) 0%,
@@ -312,8 +316,8 @@ remote-control button.bot {
 remote-control .b_small {
     max-width: 40px;
     max-height: 40px;
-    width: 13vw;
-    height: 13vw;
+    width: calc(13 * var(--vw));
+    height: calc(13 * var(--vw));
     border-radius: 20px;
     position: relative;
     background: linear-gradient(
@@ -391,7 +395,7 @@ remote-control .b_small[disabled]::after {
 
 .b_ray.chung button {
     max-width: none;
-    width: 50vw;
+    width: calc(50 * var(--vw));
     flex-shrink: 0;
 }
 
@@ -405,30 +409,8 @@ remote-control .b_small[disabled]::after {
 
 .b_ray.chung_ button {
     width: 100%;
-    height: 35vw;
+    height: calc(35 * var(--vw));
     flex-shrink: 0;
-}
-
-/*----------------------
-welcome---to---ngu---trong---phong---thu {
-    display: none;
-}
-
-remote-control {
-    display: grid;
-}
-
-body {
-    background-image: url('remote.jpg');
-}
-*/
-
-for-mobile {
-    display: none;
-    right: 50%;
-    top: 50%;
-    transform: translate(50%, -50%);
-    max-width: min(300px, calc(50% - 10vw));
 }
 
 eyes {
@@ -438,10 +420,27 @@ eyes {
 }
 
 @media (hover: none) and (pointer: coarse) {
-    body * {
-        display: none;
+    body {
+        touch-action: pan-x pan-y;
     }
-    body for-mobile {
-        display: block;
+
+    welcome---to---measure---a---machine---heart,
+    main {
+        display: none !important;
+    }
+
+    remote-control {
+        --vw: calc(1vh * 310 / 950);
+        display: grid !important;
+        background-image: url('remote.jpg') !important;
+        background-size: 100% 100%;
+        height: 100svh;
+        width: calc(var(--vw) * 100);
+        margin: 0 auto;
+        padding: calc(var(--vw) * 8);
+    }
+
+    body {
+        overflow: hidden;
     }
 }
