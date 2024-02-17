@@ -28,6 +28,9 @@ for Android users, I'm not sure how to carry this out :(, if anyone figures it o
     devtoolopenfirst = false;
     replace_state_allow = false;
     removeprepend(true);
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
 } else {
     addEventListener('devtoolschange', devtoolschange_func);
     onresize = _.debounce(function () {
